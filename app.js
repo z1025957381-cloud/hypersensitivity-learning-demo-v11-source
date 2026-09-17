@@ -2,6 +2,9 @@ const course = document.querySelector('#course');
 const lessons = [...document.querySelectorAll('.lesson')];
 const dots = [...document.querySelectorAll('.rail-dot')];
 const GUIDE_ADVANCE_DELAY = 540;
+const FOCUS_CONFIRM_DELAY = 320;
+const FOCUS_VISUAL_DELAY = 900;
+const FOCUS_INTRO_DELAY = 1000;
 
 function showAnswerMessage(question, message, type) {
   let status = question.querySelector('.answer-message');
@@ -46,6 +49,38 @@ function markAnswer(lesson, option) {
   dot?.classList.add('completed');
 }
 
+function advanceFocusedGuide(lesson, question, step) {
+  const stableScrollTop = course.scrollTop;
+  window.setTimeout(() => {
+    lesson.classList.add(`guide-stage-${step}`, 'focus-transitioning');
+
+    window.setTimeout(() => {
+      question.hidden = true;
+
+      if (step === 1) {
+        const nextQuestion = lesson.querySelector('[data-guide-step="2"]');
+        if (nextQuestion) nextQuestion.hidden = false;
+      } else {
+        const feedback = lesson.querySelector('.guide-feedback');
+        if (feedback) feedback.hidden = false;
+      }
+
+      window.requestAnimationFrame(() => {
+        course.scrollTop = stableScrollTop;
+        lesson.classList.remove('focus-transitioning');
+        if (step === 2) {
+          lesson.classList.add('answered');
+          const dot = dots.find((item) => item.dataset.target === lesson.id);
+          dot?.classList.add('completed');
+        }
+        window.requestAnimationFrame(() => {
+          course.scrollTop = stableScrollTop;
+        });
+      });
+    }, FOCUS_VISUAL_DELAY);
+  }, FOCUS_CONFIRM_DELAY);
+}
+
 function markGuidedAnswer(lesson, option) {
   const question = option.closest('.guide-question');
   if (!question || question.classList.contains('resolved')) return;
@@ -70,6 +105,12 @@ function markGuidedAnswer(lesson, option) {
     item.setAttribute('aria-disabled', 'true');
   });
   showAnswerMessage(question, '回答正确。', 'correct');
+
+  if (lesson.classList.contains('focus-layout')) {
+    option.blur();
+    advanceFocusedGuide(lesson, question, step);
+    return;
+  }
 
   if (step === 1) {
     lesson.classList.add('guide-stage-1');
@@ -116,6 +157,17 @@ const observer = new IntersectionObserver((entries) => {
 
   if (!visible) return;
   lessons.forEach((lesson) => lesson.classList.toggle('is-current', lesson === visible.target));
+  if (
+    visible.target.classList.contains('focus-layout') &&
+    !visible.target.classList.contains('focus-introduced') &&
+    !visible.target.classList.contains('focus-intro')
+  ) {
+    visible.target.classList.add('focus-intro');
+    window.setTimeout(() => {
+      visible.target.classList.remove('focus-intro');
+      visible.target.classList.add('focus-introduced');
+    }, FOCUS_INTRO_DELAY);
+  }
   const progressTarget = visible.target.dataset.progressTarget || visible.target.id;
   dots.forEach((dot) => {
     const isCurrent = dot.dataset.target === progressTarget;
