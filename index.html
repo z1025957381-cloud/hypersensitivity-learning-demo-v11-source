@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f6f8ff" />
+  <meta name="description" content="通过简约医学贴图和直接点选，理解并记住四型超敏反应的代表疾病。" />
+  <title>超敏反应｜机制记忆</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232d4f91'/%3E%3Cpath d='M17 18h30M17 32h30M17 46h30' stroke='white' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='18' r='7' fill='%23f6b354'/%3E%3Ccircle cx='39' cy='32' r='7' fill='%2368c2b9'/%3E%3Ccircle cx='28' cy='46' r='7' fill='%23958be8'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="course" id="course" aria-label="四型超敏反应互动学习">
+    <nav class="rail" aria-label="学习进度">
+      <span class="rail-line" aria-hidden="true"></span>
+      <button class="rail-dot current completed" data-target="intro-normal" aria-label="学习引入"></button>
+      <button class="rail-dot" data-target="type1" aria-label="Ⅰ型"></button>
+      <button class="rail-dot" data-target="type2" aria-label="Ⅱ型"></button>
+      <button class="rail-dot" data-target="type3" aria-label="Ⅲ型"></button>
+      <button class="rail-dot" data-target="type4" aria-label="Ⅳ型"></button>
+      <button class="rail-dot" data-target="sle" aria-label="系统性红斑狼疮辨析"></button>
+      <button class="rail-dot" data-target="rejection" aria-label="排斥反应辨析"></button>
+    </nav>
+
+    <section class="lesson intro intro-normal" id="intro-normal" data-progress-target="intro-normal" aria-labelledby="intro-normal-title">
+      <div class="lesson-inner intro-inner">
+        <header class="lesson-head">
+          <h1 id="intro-normal-title">免疫反应本来在做什么？</h1>
+        </header>
+
+        <figure class="intro-stage" aria-label="正常免疫反应清除抗原，周围组织保持完整">
+          <img src="./assets/intro-normal.png" alt="免疫细胞清除抗原，周围自身组织保持完整" />
+          <figcaption><strong>清除抗原</strong><span>周围组织保持完整</span></figcaption>
+        </figure>
+
+        <p class="swipe-hint">上滑，看看哪里出了问题 <i aria-hidden="true"></i></p>
+      </div>
+    </section>
+
+    <section class="lesson intro intro-damage" id="intro-damage" data-progress-target="intro-normal" aria-labelledby="intro-damage-title">
+      <div class="lesson-inner intro-inner">
+        <header class="lesson-head">
+          <h1 id="intro-damage-title">抗原已经清除了，为什么组织也受伤了？</h1>
+        </header>
+
+        <figure class="intro-stage" aria-label="免疫反应清除抗原的同时损伤周围自身组织">
+          <img src="./assets/intro-hypersensitivity.png" alt="免疫反应在清除抗原的同时损伤周围自身组织" />
+          <figcaption><strong>抗原被清除</strong><span>周围组织同时受损</span></figcaption>
+        </figure>
+
+        <p class="intro-definition">当免疫反应造成自身组织损伤时，就称为<strong>超敏反应</strong>。</p>
+        <p class="intro-bridge">损伤方式不同，因此分为Ⅰ、Ⅱ、Ⅲ、Ⅳ型。</p>
+        <p class="swipe-hint">上滑，从Ⅰ型开始 <i aria-hidden="true"></i></p>
+      </div>
+    </section>
+
+    <section class="lesson teaching type-1" id="type1" data-guided="true" data-scene="type1" aria-labelledby="type1-title">
+      <div class="lesson-inner">
+        <header class="lesson-head">
+          <span class="counter">01 / 06</span>
+          <p class="case-name">青霉素过敏性休克</p>
+          <h1 id="type1-title">反应为什么会这么快？</h1>
+        </header>
+
+        <p class="guide-context"><b>先看一个事实</b>第一次接触青霉素后，B细胞会产生针对它的免疫球蛋白E。</p>
+
+        <div class="guide-panel">
+        <div class="scene guided-scene" aria-label="免疫球蛋白E使肥大细胞致敏并触发介质释放的过程">
+          <img class="guide-image guide-state-0" src="./assets/type1-sensitizing.png" alt="免疫球蛋白E刚产生，仍在肥大细胞外" />
+          <img class="guide-image guide-state-1" src="./assets/type1-before.png" alt="免疫球蛋白E结合在肥大细胞表面，同一抗原再次进入" />
+          <img class="guide-image guide-state-2" src="./assets/type1-after.png" alt="肥大细胞释放已经储存的介质" />
+          <span class="guide-caption guide-caption-0">初次接触后：免疫球蛋白E已经产生</span>
+          <span class="guide-caption guide-caption-1">免疫球蛋白E结合在肥大细胞表面</span>
+          <span class="guide-caption guide-caption-2">再次接触后：介质迅速释放</span>
+        </div>
+
+        <div class="question-block guide-question" data-guide-step="1" data-answer="0">
+          <p class="guide-step"><span>1 / 2</span></p>
+          <p class="question">这些免疫球蛋白E会在哪里提前做好准备？</p>
+          <div class="options guided-options" role="group" aria-label="请选择免疫球蛋白E的位置">
+            <button class="option" data-option="0"><span>A</span>结合到肥大细胞表面</button>
+            <button class="option" data-option="1"><span>B</span>一直游离在血液中</button>
+          </div>
+        </div>
+
+        <div class="question-block guide-question guide-question-next" data-guide-step="2" data-answer="0" hidden>
+          <p class="guide-step"><span>2 / 2</span></p>
+          <p class="question">同一种青霉素再次进入后，肥大细胞会怎样？</p>
+          <div class="options guided-options" role="group" aria-label="请选择肥大细胞的反应">
+            <button class="option" data-option="0"><span>A</span>立即释放已经储存的介质</button>
+            <button class="option" data-option="1"><span>B</span>继续保持原来的状态</button>
+          </div>
+        </div>
+
+        <div class="feedback guide-feedback" role="status" aria-live="polite" hidden>
+          <p class="feedback-main">免疫球蛋白E已经让肥大细胞处于致敏状态；同一抗原再次进入时，预先储存的介质可以迅速释放。</p>
+          <p class="conclusion"><strong>Ⅰ型</strong><span>青霉素过敏性休克、支气管哮喘、荨麻疹</span></p>
+          <p class="memory"><span>记忆</span>先致敏，再迅速释放 → Ⅰ型</p>
+        </div>
+        </div>
+        <p class="swipe-hint">上滑学习Ⅱ型 <i aria-hidden="true"></i></p>
+      </div>
+    </section>
+
+    <section class="lesson teaching type-2" id="type2" data-guided="true" data-scene="type2" aria-labelledby="type2-title">
+      <div class="lesson-inner">
+        <header class="lesson-head">
+          <span class="counter">02 / 06</span>
+          <p class="case-name">血型不合输血反应</p>
+          <h2 id="type2-title">红细胞为什么会被损伤？</h2>
+        </header>
+
+        <p class="guide-context"><b>先看一个事实</b>输错血后，进入体内的红细胞表面带着与受血者不相容的抗原。</p>
+
+        <div class="guide-panel">
+        <div class="scene guided-scene" aria-label="抗体结合红细胞表面抗原并造成损伤的过程">
+          <img class="guide-image guide-state-0" src="./assets/type2-before.png" alt="抗体正在接近红细胞表面的抗原" />
+          <img class="guide-image guide-state-1" src="./assets/type2-bound.png" alt="抗体已经结合在红细胞表面的抗原上，红细胞仍完整" />
+          <img class="guide-image guide-state-2" src="./assets/type2-after.png" alt="补体等参与并造成红细胞损伤" />
+          <span class="guide-caption guide-caption-0">抗体正在寻找靶点</span>
+          <span class="guide-caption guide-caption-1">抗体贴在红细胞表面</span>
+          <span class="guide-caption guide-caption-2">补体等参与，红细胞受损</span>
+        </div>
+
+        <div class="question-block guide-question" data-guide-step="1" data-answer="0">
+          <p class="guide-step"><span>1 / 2</span></p>
+          <p class="question">这些抗体会先和哪里结合？</p>
+          <div class="options guided-options" role="group" aria-label="请选择抗体结合的位置">
+            <button class="option" data-option="0"><span>A</span>红细胞表面的固定抗原</button>
+            <button class="option" data-option="1"><span>B</span>血液中游离的抗原</button>
+          </div>
+        </div>
+
+        <div class="question-block guide-question guide-question-next" data-guide-step="2" data-answer="0" hidden>
+          <p class="guide-step"><span>2 / 2</span></p>
+          <p class="question">抗体贴住红细胞以后，接下来会怎样？</p>
+          <div class="options guided-options" role="group" aria-label="请选择红细胞的变化">
+            <button class="option" data-option="0"><span>A</span>补体等参与并造成红细胞损伤</button>
+            <button class="option" data-option="1"><span>B</span>形成复合物后随血流移动</button>
+          </div>
+        </div>
+
+        <div class="feedback guide-feedback" role="status" aria-live="polite" hidden>
+          <p class="feedback-main">免疫球蛋白G或M直接结合红细胞表面的抗原，并在补体等参与下造成细胞损伤。</p>
+          <p class="conclusion"><strong>Ⅱ型</strong><span>血型不合输血反应、系统性红斑狼疮的血细胞损伤、急性血管型排斥反应、肺出血－肾炎综合征、超急性排斥反应</span></p>
+          <p class="memory"><span>记忆</span>抗体贴住固定靶点，细胞受损 → Ⅱ型</p>
+        </div>
+        </div>
+        <p class="swipe-hint">上滑学习Ⅲ型 <i aria-hidden="true"></i></p>
+      </div>
+    </section>
+
+    <section class="lesson teaching type-3" id="type3" data-guided="true" data-scene="type3" aria-labelledby="type3-title">
+      <div class="lesson-inner">
+        <header class="lesson-head">
+          <span class="counter">03 / 06</span>
+          <p class="case-name">免疫复合物性肾小球肾炎</p>
+          <h2 id="type3-title">复合物为什么会损伤肾小球？</h2>
+        </header>
+
+        <p class="guide-context"><b>先看一个事实</b>某些抗原进入血液后，会遇到针对它们的抗体。</p>
+
+        <div class="guide-panel">
+        <div class="scene guided-scene" aria-label="免疫复合物形成、沉积并引起炎症的过程">
+          <img class="guide-image guide-state-0" src="./assets/type3-separate.png" alt="抗原与抗体分别存在于血液中，尚未结合" />
+          <img class="guide-image guide-state-1" src="./assets/type3-before.png" alt="抗原与抗体在血液中形成免疫复合物" />
+          <img class="guide-image guide-state-2" src="./assets/type3-after.png" alt="免疫复合物沉积并募集白细胞" />
+          <span class="guide-caption guide-caption-0">抗原与抗体还未结合</span>
+          <span class="guide-caption guide-caption-1">免疫复合物在血中形成</span>
+          <span class="guide-caption guide-caption-2">复合物沉积并引起炎症</span>
+        </div>
+
+        <div class="question-block guide-question" data-guide-step="1" data-answer="0">
+          <p class="guide-step"><span>1 / 2</span></p>
+          <p class="question">抗原与抗体在血液中相遇后，会先形成什么？</p>
+          <div class="options guided-options" role="group" aria-label="请选择抗原抗体相遇后的产物">
+            <button class="option" data-option="0"><span>A</span>可溶性的免疫复合物</button>
+            <button class="option" data-option="1"><span>B</span>直接贴在某个细胞表面</button>
+          </div>
+        </div>
+
+        <div class="question-block guide-question guide-question-next" data-guide-step="2" data-answer="0" hidden>
+          <p class="guide-step"><span>2 / 2</span></p>
+          <p class="question">这些复合物到达肾小球后，哪一步会造成局部损伤？</p>
+          <div class="options guided-options" role="group" aria-label="请选择免疫复合物造成损伤的方式">
+            <button class="option" data-option="0"><span>A</span>沉积在组织并引起炎症</button>
+            <button class="option" data-option="1"><span>B</span>继续随血流通过</button>
+          </div>
+        </div>
+
+        <div class="feedback guide-feedback" role="status" aria-live="polite" hidden>
+          <p class="feedback-main">免疫复合物沉积后激活补体、募集白细胞，引起血管和组织损伤。</p>
+          <p class="conclusion"><strong>Ⅲ型</strong><span>系统性红斑狼疮的内脏损伤、类风湿关节炎、免疫复合物性肾小球肾炎</span></p>
+          <p class="memory"><span>记忆</span>复合物形成后沉积 → Ⅲ型</p>
+        </div>
+        </div>
+        <p class="swipe-hint">上滑学习Ⅳ型 <i aria-hidden="true"></i></p>
+      </div>
+    </section>
+
+    <section class="lesson teaching type-4" id="type4" data-guided="true" data-scene="type4" aria-labelledby="type4-title">
+      <div class="lesson-inner">
+        <header class="lesson-head">
+          <span class="counter">04 / 06</span>
+          <p class="case-name">结核菌素试验</p>
+          <h2 id="type4-title">为什么要过一段时间才出现反应？</h2>
+        </header>
+
+        <p class="guide-context"><b>先看一个事实</b>结核菌素进入皮肤后，局部出现了需要处理的抗原。</p>
+
+        <div class="guide-panel">
+        <div class="scene guided-scene" aria-label="效应T细胞从血液进入局部并引起炎症的过程">
+          <img class="guide-image guide-state-0" src="./assets/type4-antigen-only.png" alt="局部已有抗原，血液中尚未出现效应T细胞" />
+          <img class="guide-image guide-state-1" src="./assets/type4-before.png" alt="效应T细胞正在随血流到达局部" />
+          <img class="guide-image guide-state-2" src="./assets/type4-after.png" alt="效应T细胞进入局部并引起炎症" />
+          <span class="guide-caption guide-caption-0">局部出现抗原</span>
+          <span class="guide-caption guide-caption-1">效应T细胞在血液中</span>
+          <span class="guide-caption guide-caption-2">效应T细胞进入局部</span>
+        </div>
+
+        <div class="question-block guide-question" data-guide-step="1" data-answer="0">
+          <p class="guide-step"><span>1 / 2</span></p>
+          <p class="question">这类反应主要等谁到达局部？</p>
+          <div class="options guided-options" role="group" aria-label="请选择主要到达局部的免疫成分">
+            <button class="option" data-option="0"><span>A</span>已经形成的效应T细胞</button>
+            <button class="option" data-option="1"><span>B</span>抗体和肥大细胞</button>
+          </div>
+        </div>
+
+        <div class="question-block guide-question guide-question-next" data-guide-step="2" data-answer="0" hidden>
+          <p class="guide-step"><span>2 / 2</span></p>
+          <p class="question">为什么反应通常要过一段时间才出现？</p>
+          <div class="options guided-options" role="group" aria-label="请选择反应较慢的原因">
+            <button class="option" data-option="0"><span>A</span>效应T细胞需要从血液进入局部</button>
+            <button class="option" data-option="1"><span>B</span>肥大细胞正在立即释放介质</button>
+          </div>
+        </div>
+
+        <div class="feedback guide-feedback" role="status" aria-live="polite" hidden>
+          <p class="feedback-main">效应T细胞进入局部并引起炎症需要一定时间，通常于再次接触抗原后24～72小时出现。</p>
+          <p class="conclusion"><strong>Ⅳ型</strong><span>结核病、结核菌素试验、血吸虫虫卵结节、急性细胞型排斥反应</span></p>
+          <p class="memory"><span>记忆</span>效应T细胞进入局部 → Ⅳ型</p>
+        </div>
+        </div>
+        <p class="swipe-hint">上滑辨析易混疾病 <i aria-hidden="true"></i></p>
+      </div>
+    </section>
+
+    <section class="lesson compare sle" id="sle" data-answer="1" aria-labelledby="sle-title">
+      <div class="lesson-inner">
+        <header class="lesson-head">
+          <span class="counter">05 / 06</span>
+          <p class="case-name">易混辨析</p>
+          <h2 id="sle-title">同样是系统性红斑狼疮，为什么分型不同？</h2>
+        </header>
+
+        <div class="compare-visual" aria-label="系统性红斑狼疮两种损伤机制对比">
+          <figure>
+            <img src="./assets/type2-after.png" alt="抗体直接结合血细胞表面" />
+            <figcaption><span>血细胞损伤</span><strong>固定靶点</strong></figcaption>
+          </figure>
+          <figure>
+            <img src="./assets/type3-after.png" alt="免疫复合物沉积于内脏组织" />
+            <figcaption><span>内脏损伤</span><strong>复合物沉积</strong></figcaption>
+          </figure>
+        </div>
+
+        <div class="question-block compact-question">
+          <p class="question">哪种损伤属于Ⅲ型超敏反应？</p>
+          <div class="options two-options" role="group" aria-label="请选择损伤类型">
+            <button class="option" data-option="0"><span>A</span>血细胞损伤</button>
+            <button class="option" data-option="1"><span>B</span>内脏损伤</button>
+          </div>
+        </div>
+
+        <div class="feedback compare-feedback" role="status" aria-live="polite">
+          <p class="pair-line"><b>血细胞损伤</b><span>抗体贴住血细胞</span><strong>Ⅱ型</strong></p>
+          <p class="pair-line"><b>内脏损伤</b><span>免疫复合物沉积</span><strong>Ⅲ型</strong></p>
+          <p class="memory"><span>记忆</span>损伤血细胞看Ⅱ型；损伤内脏看Ⅲ型</p>
+        </div>
+        <p class="swipe-hint">上滑辨析排斥反应 <i aria-hidden="true"></i></p>
+      </div>
+    </section>
+
+    <section class="lesson compare rejection" id="rejection" data-answer="2" aria-labelledby="rejection-title">
+      <div class="lesson-inner">
+        <header class="lesson-head">
+          <span class="counter">06 / 06</span>
+          <p class="case-name">易混辨析</p>
+          <h2 id="rejection-title">排斥反应，关键看谁在攻击</h2>
+        </header>
+
+        <div class="compare-visual" aria-label="抗体介导与T细胞介导的排斥反应对比">
+          <figure>
+            <img src="./assets/type2-after.png" alt="抗体直接结合固定靶点" />
+            <figcaption><span>抗体介导</span><strong>血管内皮</strong></figcaption>
+          </figure>
+          <figure>
+            <img src="./assets/type4-after.png" alt="效应T细胞进入组织" />
+            <figcaption><span>T细胞介导</span><strong>进入移植物</strong></figcaption>
+          </figure>
+        </div>
+
+        <div class="question-block compact-question">
+          <p class="question">哪种排斥反应主要由T细胞介导，属于Ⅳ型？</p>
+          <div class="options three-options" role="group" aria-label="请选择排斥反应">
+            <button class="option" data-option="0"><span>A</span>超急性排斥反应</button>
+            <button class="option" data-option="1"><span>B</span>急性血管型排斥反应</button>
+            <button class="option" data-option="2"><span>C</span>急性细胞型排斥反应</button>
+          </div>
+        </div>
+
+        <div class="feedback compare-feedback" role="status" aria-live="polite">
+          <p class="pair-line"><b>超急性、急性血管型</b><span>抗体介导</span><strong>Ⅱ型</strong></p>
+          <p class="pair-line"><b>急性细胞型</b><span>T细胞介导</span><strong>Ⅳ型</strong></p>
+          <p class="memory"><span>记忆</span>“细胞型”抓住T细胞和Ⅳ型</p>
+        </div>
+        <p class="finish">完成 · 四种机制已经串成疾病分类线索</p>
+      </div>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
