@@ -15,6 +15,7 @@ function showAnswerMessage(question, message, type) {
 
   status.className = `answer-message is-${type}`;
   status.textContent = message;
+  status.removeAttribute('aria-hidden');
 }
 
 function markAnswer(lesson, option) {

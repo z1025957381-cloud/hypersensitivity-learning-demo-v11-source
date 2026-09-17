@@ -583,6 +583,103 @@ h1, h2 {
 .answer-message.is-wrong { color: var(--bad); }
 .answer-message.is-correct { color: var(--good); }
 
+/* Type II layout trial: keep the visual and interaction anchors stable. */
+.focus-layout .lesson-inner {
+  justify-content: flex-start;
+  padding-top: max(28px, env(safe-area-inset-top));
+}
+
+.focus-layout h2 { margin-top: 6px; }
+
+.focus-layout .guide-context {
+  margin-top: 8px;
+  margin-bottom: 9px;
+}
+
+.focus-layout .guide-panel {
+  grid-template-rows: auto auto;
+  gap: 10px;
+  padding: 7px 10px 10px;
+}
+
+.teaching.focus-layout .guided-scene {
+  width: min(100%, 360px);
+  margin-bottom: 0;
+}
+
+.focus-layout .guide-question {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(72px, 1fr);
+  align-content: start;
+  justify-content: stretch;
+  min-height: 250px;
+  padding: 0 2px;
+  column-gap: 9px;
+  row-gap: 8px;
+}
+
+.focus-layout .guide-step {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  margin: 1px 0 0;
+}
+
+.focus-layout .question {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  margin: 0;
+}
+
+.focus-layout .guided-options {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.focus-layout .answer-message {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  align-self: start;
+  min-height: 66px;
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity .18s ease, background-color .18s ease;
+}
+
+.focus-layout .answer-message.is-wrong {
+  color: #a83d45;
+  background: color-mix(in srgb, var(--bad-soft) 82%, white);
+  opacity: 1;
+}
+
+.focus-layout .answer-message.is-correct {
+  color: color-mix(in srgb, var(--good) 82%, var(--ink));
+  background: color-mix(in srgb, var(--good-soft) 82%, white);
+  opacity: 1;
+}
+
+.focus-layout .guide-question-next:not([hidden]) {
+  animation: focus-question-in .2s ease both;
+}
+
+@keyframes focus-question-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.focus-layout:not(.answered) .swipe-hint {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.course:has(.focus-layout.is-current) .rail-dot:not(.current) { opacity: .34; }
+.course:has(.focus-layout.is-current) .rail-line { opacity: .42; }
+
 .option > span {
   display: grid;
   place-items: center;
