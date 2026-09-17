@@ -4,59 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#fffaf9" />
-  <title>超敏反应｜基础模型</title>
-  <link rel="stylesheet" href="./styles.css?v=2" />
+  <title>超敏反应｜视觉中心模型</title>
+  <link rel="stylesheet" href="./styles.css?v=3" />
 </head>
 <body>
   <main class="app">
     <section class="directory" id="directory" aria-labelledby="directory-title">
-      <p class="directory-label">超敏反应 · 基础模型</p>
+      <p class="directory-label">超敏反应 · 视觉中心模型</p>
       <h1 id="directory-title">目录</h1>
       <button class="directory-item" id="open-type2" type="button">
-        <span>02</span>
-        <strong>Ⅱ型超敏反应</strong>
-        <small>血型不合输血反应</small>
+        <span>02</span><strong>Ⅱ型超敏反应</strong><small>血型不合输血反应</small>
       </button>
-      <p class="directory-note">本模型只验证一个完整的图片驱动学习单元。</p>
+      <p class="directory-note">点击进入，观察内容如何在同一视觉中心递进。</p>
     </section>
 
-    <section class="lesson" id="lesson" hidden aria-labelledby="lesson-title">
+    <section class="lesson" id="lesson" data-phase="title" hidden aria-labelledby="lesson-title">
       <button class="back-button" id="back-directory" type="button">← 目录</button>
+      <div class="focus-stage">
+        <header class="title-panel">
+          <p>02 / 06　血型不合输血反应</p>
+          <h1 id="lesson-title" data-title="红细胞为什么会被损伤？"></h1>
+        </header>
 
-      <header class="lesson-header">
-        <p>02 / 06　血型不合输血反应</p>
-        <h1 id="lesson-title" data-title="红细胞为什么会被损伤？"></h1>
-      </header>
-
-      <section class="visual-stage" aria-label="机制图变化区" aria-live="polite">
-        <div class="image-frame" id="image-frame">
+        <section class="visual-panel" aria-label="机制图变化区" aria-live="polite">
           <div class="diagram state-start" id="mechanism-diagram" role="img" aria-label="抗体正在接近细胞表面的靶点">
             <div class="cell">
-              <i class="target target-1"></i>
-              <i class="target target-2"></i>
-              <i class="target target-3"></i>
-              <i class="target target-4"></i>
+              <i class="target target-1"></i><i class="target target-2"></i>
+              <i class="target target-3"></i><i class="target target-4"></i>
             </div>
-            <span class="antibody antibody-1">Y</span>
-            <span class="antibody antibody-2">Y</span>
-            <span class="antibody antibody-3">Y</span>
-            <span class="effect effect-1">✦</span>
-            <span class="effect effect-2">✦</span>
-            <span class="effect effect-3">✦</span>
-            <div class="complex complex-1"><b>Y</b><i></i></div>
-            <div class="complex complex-2"><b>Y</b><i></i></div>
+            <span class="antibody antibody-1">Y</span><span class="antibody antibody-2">Y</span><span class="antibody antibody-3">Y</span>
+            <span class="effect effect-1">✦</span><span class="effect effect-2">✦</span><span class="effect effect-3">✦</span>
+            <div class="complex complex-1"><b>Y</b><i></i></div><div class="complex complex-2"><b>Y</b><i></i></div>
           </div>
-          <p id="image-caption">抗体正在寻找红细胞表面的固定抗原</p>
-        </div>
-      </section>
+        </section>
 
-      <section class="text-stage" aria-live="polite">
-        <p class="keypoint" id="keypoint" hidden></p>
-        <div class="question-area" id="question-area"></div>
-      </section>
+        <section class="content-panel" aria-live="polite">
+          <div class="question-core" id="question-core"></div>
+          <div class="explanation" id="explanation" hidden></div>
+          <div class="summary" id="summary" hidden></div>
+        </section>
+      </div>
     </section>
   </main>
-
-  <script src="./app.js?v=2"></script>
+  <script src="./app.js?v=3"></script>
 </body>
 </html>
