@@ -5,6 +5,7 @@ const GUIDE_ADVANCE_DELAY = 540;
 const FOCUS_CONFIRM_DELAY = 320;
 const FOCUS_VISUAL_DELAY = 900;
 const FOCUS_INTRO_DELAY = 1000;
+const PROTOTYPE_ADVANCE_DELAY = 1800;
 
 function showAnswerMessage(question, message, type) {
   let status = question.querySelector('.answer-message');
@@ -81,6 +82,59 @@ function advanceFocusedGuide(lesson, question, step) {
   }, FOCUS_CONFIRM_DELAY);
 }
 
+function showPrototypeWrongVisual(lesson, option) {
+  lesson.classList.add('prototype-wrong');
+  const keypoint = lesson.querySelector('.focus-keypoint');
+  if (keypoint) {
+    keypoint.textContent = option.dataset.visualFeedback || '错误路径：游离抗原与抗体形成复合物 → Ⅲ型';
+    keypoint.classList.add('is-visible', 'is-wrong');
+  }
+}
+
+function advancePrototypeGuide(lesson, question, step) {
+  lesson.classList.remove('prototype-wrong');
+  lesson.classList.add(`guide-stage-${step}`);
+
+  const keypoint = lesson.querySelector('.focus-keypoint');
+  if (keypoint) {
+    keypoint.textContent = question.dataset.keypoint || '';
+    keypoint.classList.add('is-visible');
+    keypoint.classList.remove('is-wrong');
+  }
+
+  window.setTimeout(() => {
+    question.hidden = true;
+    if (step === 1) {
+      const nextQuestion = lesson.querySelector('[data-guide-step="2"]');
+      if (nextQuestion) nextQuestion.hidden = false;
+      return;
+    }
+
+    const feedback = lesson.querySelector('.guide-feedback');
+    if (feedback) feedback.hidden = false;
+    lesson.classList.add('answered');
+  }, PROTOTYPE_ADVANCE_DELAY);
+}
+
+function typeLessonTitle(lesson) {
+  if (lesson.classList.contains('title-typed')) return;
+  const title = lesson.querySelector('.lesson-head h1, .lesson-head h2');
+  if (!title) return;
+
+  lesson.classList.add('title-typed', 'title-typing');
+  const content = title.textContent.trim();
+  title.textContent = '';
+  let index = 0;
+  const timer = window.setInterval(() => {
+    index += 1;
+    title.textContent = content.slice(0, index);
+    if (index >= content.length) {
+      window.clearInterval(timer);
+      lesson.classList.remove('title-typing');
+    }
+  }, 85);
+}
+
 function markGuidedAnswer(lesson, option) {
   const question = option.closest('.guide-question');
   if (!question || question.classList.contains('resolved')) return;
@@ -95,6 +149,7 @@ function markGuidedAnswer(lesson, option) {
     option.disabled = true;
     option.setAttribute('aria-disabled', 'true');
     showAnswerMessage(question, option.dataset.feedback || '回答错误，请结合机制再试一次。', 'wrong');
+    if (lesson.classList.contains('prototype-v2')) showPrototypeWrongVisual(lesson, option);
     return;
   }
 
@@ -105,6 +160,12 @@ function markGuidedAnswer(lesson, option) {
     item.setAttribute('aria-disabled', 'true');
   });
   showAnswerMessage(question, '回答正确。', 'correct');
+
+  if (lesson.classList.contains('prototype-v2')) {
+    option.blur();
+    advancePrototypeGuide(lesson, question, step);
+    return;
+  }
 
   if (lesson.classList.contains('focus-layout')) {
     option.blur();
@@ -159,6 +220,7 @@ const observer = new IntersectionObserver((entries) => {
   lessons.forEach((lesson) => lesson.classList.toggle('is-current', lesson === visible.target));
   if (
     visible.target.classList.contains('focus-layout') &&
+    !visible.target.classList.contains('prototype-v2') &&
     !visible.target.classList.contains('focus-introduced') &&
     !visible.target.classList.contains('focus-intro')
   ) {
@@ -168,6 +230,7 @@ const observer = new IntersectionObserver((entries) => {
       visible.target.classList.add('focus-introduced');
     }, FOCUS_INTRO_DELAY);
   }
+  if (visible.target.classList.contains('prototype-v2')) typeLessonTitle(visible.target);
   const progressTarget = visible.target.dataset.progressTarget || visible.target.id;
   dots.forEach((dot) => {
     const isCurrent = dot.dataset.target === progressTarget;
