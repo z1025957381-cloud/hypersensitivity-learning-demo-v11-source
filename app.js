@@ -3,17 +3,43 @@ const lessons = [...document.querySelectorAll('.lesson')];
 const dots = [...document.querySelectorAll('.rail-dot')];
 const GUIDE_ADVANCE_DELAY = 540;
 
+function showAnswerMessage(question, message, type) {
+  let status = question.querySelector('.answer-message');
+  if (!status) {
+    status = document.createElement('p');
+    status.className = 'answer-message';
+    status.setAttribute('role', 'alert');
+    status.setAttribute('aria-live', 'assertive');
+    question.append(status);
+  }
+
+  status.className = `answer-message is-${type}`;
+  status.textContent = message;
+}
+
 function markAnswer(lesson, option) {
   if (lesson.classList.contains('answered')) return;
 
   const answer = Number(lesson.dataset.answer);
   const selected = Number(option.dataset.option);
   const options = [...lesson.querySelectorAll('.option')];
+  const question = option.closest('.question-block');
+
+  if (selected !== answer) {
+    option.classList.add('is-wrong');
+    option.disabled = true;
+    option.setAttribute('aria-disabled', 'true');
+    showAnswerMessage(question, option.dataset.feedback || '回答错误，请结合机制再试一次。', 'wrong');
+    return;
+  }
 
   lesson.classList.add('answered');
-  option.classList.add(selected === answer ? 'is-correct' : 'is-wrong');
-  options.find((item) => Number(item.dataset.option) === answer)?.classList.add('is-correct');
-  options.forEach((item) => item.setAttribute('aria-disabled', 'true'));
+  option.classList.add('is-correct');
+  options.forEach((item) => {
+    item.disabled = true;
+    item.setAttribute('aria-disabled', 'true');
+  });
+  showAnswerMessage(question, '回答正确。', 'correct');
 
   const dot = dots.find((item) => item.dataset.target === lesson.id);
   dot?.classList.add('completed');
@@ -28,13 +54,21 @@ function markGuidedAnswer(lesson, option) {
   const options = [...question.querySelectorAll('.option')];
   const step = Number(question.dataset.guideStep);
 
+  if (selected !== answer) {
+    option.classList.add('is-wrong');
+    option.disabled = true;
+    option.setAttribute('aria-disabled', 'true');
+    showAnswerMessage(question, option.dataset.feedback || '回答错误，请结合机制再试一次。', 'wrong');
+    return;
+  }
+
   question.classList.add('resolved');
-  option.classList.add(selected === answer ? 'is-correct' : 'is-wrong');
-  options.find((item) => Number(item.dataset.option) === answer)?.classList.add('is-correct');
+  option.classList.add('is-correct');
   options.forEach((item) => {
     item.disabled = true;
     item.setAttribute('aria-disabled', 'true');
   });
+  showAnswerMessage(question, '回答正确。', 'correct');
 
   if (step === 1) {
     lesson.classList.add('guide-stage-1');

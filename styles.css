@@ -570,6 +570,18 @@ h1, h2 {
 .option:active { transform: scale(.985); }
 .option:hover { border-color: color-mix(in srgb, var(--accent) 38%, #dbe3f0); background: color-mix(in srgb, var(--accent-soft) 24%, white); }
 .option:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 30%, transparent); outline-offset: 2px; }
+.option.is-wrong { border-color: #dfa3a7; background: var(--bad-soft); }
+.option.is-wrong > span { color: white; background: var(--bad); }
+
+.answer-message {
+  margin: 9px 2px 0;
+  font-size: .9rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.answer-message.is-wrong { color: var(--bad); }
+.answer-message.is-correct { color: var(--good); }
 
 .option > span {
   display: grid;
