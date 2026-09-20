@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FBF8F0"><meta name="description" content="超敏反应Ⅰ—Ⅳ型完整课程工作稿。">
+<title>超敏反应｜四型完整课程工作稿</title>
+<style>:root {
+  color-scheme: light;
+  --page-bg:#FBF8F0; --canvas:#E8E7E1; --surface:#FFFFFF;
+  --surface-warm:#F4F0E6; --surface-green:#EDF4F0;
+  --ink:#20332D; --ink-2:#445650; --muted:#617168; --weak:#6F7C75;
+  --line:#CBD1CC; --accent:#275B4B; --accent-soft:#DCE9E2;
+  --success:#2C6A58; --success-soft:#E6F1EC;
+  --danger:#7A4038; --danger-soft:#F5E8E5;
+  --review:#9B6A2B; --review-soft:#F3EADC;
+  --page-pad:20px; --image-wide:326px; --image-square:292px; --image-portrait:252px;
+  --f-title:1rem; --f-hero:1.5rem; --f-body:1.0625rem;
+  --f-caption:1rem; --f-prompt:.9375rem; --f-label:.875rem; --f-meta:.75rem;
+  --r-card:24px; --r-option:14px; --r-dialog:24px;
+  --shadow:0 12px 32px rgb(31 49 43 / .045);
+  --ease:cubic-bezier(.2,.72,.2,1);
+  font:16px -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+@media (max-width:360px) { :root { --page-pad:16px; --f-hero:1.375rem; } }
+
+*{box-sizing:border-box} [hidden]{display:none!important}
+html,body{margin:0;width:100%;height:100%;background:var(--canvas);color:var(--ink)}
+body{display:grid;place-items:center;overflow:hidden;-webkit-font-smoothing:antialiased}
+button,select,input{font:inherit}button{touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button{color:inherit}button:disabled{cursor:default;opacity:.42}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.app-shell{position:relative;width:min(100%,480px);height:100vh;height:100dvh;max-height:1024px;background:var(--page-bg);overflow:hidden}
+.main-ui{height:100%;display:flex;flex-direction:column}
+.app-header{flex:none;display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;min-height:78px;border-bottom:1px solid rgb(203 209 204 / .4)}
+.header-copy{text-align:center;min-width:0}.brand{margin:0;color:var(--weak);font-size:var(--f-meta);line-height:1.6;font-weight:600;letter-spacing:.06em}
+.title{margin:2px 0 0;font-size:var(--f-title);line-height:1.5;font-weight:750;overflow-wrap:anywhere}.count{text-align:center;font-size:.75rem;line-height:1.5;color:var(--muted);font-variant-numeric:tabular-nums}
+.icon-button{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;background:transparent;border-radius:14px;color:var(--accent);flex:none}
+.icon-button:hover{background:var(--surface-warm)}.icon-button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.course{position:relative;flex:1;min-height:0;overflow:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#CBD1CC transparent;touch-action:pan-y}
+.screen{position:relative;display:flex;flex-direction:column;min-height:100%;padding:24px var(--page-pad) 28px;isolation:isolate}
+.scene-stack{width:100%;flex:none;margin-block:auto;display:flex;flex-direction:column;align-items:center;gap:18px}
+.prelude{width:min(100%,326px);margin:0;padding:0 8px;text-align:center;font-size:var(--f-prompt);line-height:1.65;font-weight:600;color:var(--ink-2);overflow-wrap:anywhere}
+.ghosted{visibility:hidden}
+.intro-layer{position:absolute;inset:0;z-index:3;display:grid;place-items:center;padding:28px 24px;background:var(--page-bg);pointer-events:none;overflow:visible}
+.hero-copy{position:relative;margin:0;width:min(100%,306px);font-size:var(--f-hero);line-height:1.55;letter-spacing:-.01em;font-weight:750;text-align:center;overflow-wrap:anywhere;pointer-events:auto;cursor:pointer}
+.char{opacity:1}.typing-active .char{opacity:0}.typed-string{white-space:pre-wrap;overflow-wrap:anywhere}
+.visual-module{flex:none;margin:0;width:min(100%,326px);border:1px solid rgb(203 209 204 / .7);border-radius:var(--r-card);overflow:hidden;box-shadow:var(--shadow);background:var(--surface)}
+.visual-stage{position:relative;background:var(--surface-green);display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden}
+.artboard{position:relative;width:100%;height:100%;flex:none;max-width:100%;isolation:isolate}
+.blank-image{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.diagram-layer{position:absolute;inset:0;pointer-events:none}
+.diagram-symbol{position:absolute;left:50%;top:48%;width:36%;aspect-ratio:1;transform:translate(-50%,-50%);border:1px solid #AAC5B8;border-radius:50%;background:#DCE9E2;display:grid;place-items:center}
+.diagram-symbol::before{content:"";width:53%;height:53%;border:1px solid #ACC9B9;border-radius:50%;background:#C7DBD1}
+.diagram-symbol::after{content:"";position:absolute;width:2px;height:26%;background:#8AAE9C;top:37%;left:50%;transform:rotate(90deg)}
+.symbol-dot{position:absolute;width:13px;height:13px;border:1px solid var(--accent);background:var(--page-bg);border-radius:50%;transform:translate(-50%,-50%)}
+.symbol-dot.active{background:var(--accent)}
+.object-label{position:absolute;transform:translate(-50%,-50%);font-size:var(--f-label);line-height:1.45;font-weight:600;background:rgb(255 255 255 / .93);border-radius:9px;padding:3px 7px;color:var(--ink-2);white-space:nowrap}
+.object-label.a{left:25%;top:23%}.object-label.b{left:75%;top:73%}
+.placeholder-name{position:absolute;left:50%;top:84%;transform:translate(-50%,-50%);font-size:var(--f-meta);line-height:1.5;color:var(--muted);white-space:nowrap}
+.detail-control{position:absolute;right:8px;top:6px;z-index:2;background:rgb(251 248 240 / .82);width:44px;height:44px;font-size:.75rem;border:0;border-radius:13px;color:var(--accent)}
+.detail-map{position:absolute;left:8px;bottom:8px;width:45px;height:34px;border:1px solid #8AAE9C;background:rgb(251 248 240 / .92);border-radius:5px}
+.detail-map::after{content:"";position:absolute;inset:8px 14px;border:1px solid var(--accent);border-radius:50%}
+.visual-module.is-detail .diagram-layer{transform:scale(1.35);transform-origin:50% 48%}.visual-module.is-detail .object-label.a{left:16.25%;top:14.25%}.visual-module.is-detail .object-label.b{left:83.75%;top:81.75%}
+.visual-caption{margin:0;border-top:1px solid rgb(203 209 204 / .65);background:var(--surface);padding:12px 16px 14px;min-height:64px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:var(--f-caption);line-height:1.625;font-weight:600;color:var(--ink);overflow-wrap:anywhere}
+.visual-caption.is-long{text-align:left;align-items:flex-start}.caption-text{width:100%}
+.caption-sizer{position:absolute;left:-10000px;top:0;visibility:hidden;pointer-events:none;margin:0;border:0;box-sizing:border-box;height:auto!important;min-height:0!important}
+.frame-nav{display:flex;align-items:center;justify-content:center;gap:12px;min-height:44px;margin-top:-12px;font-size:.75rem;line-height:1.5;color:var(--muted)}.frame-nav .icon-button{width:44px;height:44px}.frame-count{min-width:48px;text-align:center}
+.question-card{width:min(100%,350px);padding:22px 18px;border:1px solid rgb(203 209 204 / .75);border-radius:24px;background:var(--surface);box-shadow:var(--shadow)}
+.q-context{margin:0 0 10px;font-size:.875rem;line-height:1.6;font-weight:500;color:var(--muted);text-align:center;overflow-wrap:anywhere}
+.q-stem{margin:0;font-size:var(--f-hero);line-height:1.5;font-weight:750;text-align:center;overflow-wrap:anywhere}.q-stem.is-long{text-align:left}
+.options{display:grid;gap:10px;margin-top:20px}.option{display:flex;gap:12px;align-items:center;width:100%;min-height:56px;padding:12px;border:1px solid var(--line);border-radius:var(--r-option);background:var(--surface);font-size:1rem;line-height:1.56;text-align:left;font-weight:550;overflow-wrap:anywhere}
+.option .option-copy{flex:1;min-width:0}.chip{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:var(--surface-green);font-size:.8125rem;font-weight:700;color:var(--accent)}
+.option:hover{background:#F5F8F5}.option.correct{border-color:var(--success);background:var(--success-soft);opacity:1}.option.correct .chip{background:var(--success);color:#fff}.option.wrong{border-color:var(--danger);background:var(--danger-soft)}.option.wrong .chip{background:var(--danger);color:#fff}
+.answer-note{margin:12px 0 0;min-height:22px;color:var(--success);font-size:.8125rem;line-height:1.6;text-align:center}
+.image-question .visual-module{box-shadow:none}.image-question .q-context{display:none}.image-question .question-card{border:0;background:transparent;padding:0;box-shadow:none}.image-question .q-stem{font-size:1.25rem;line-height:1.5}
+.text-card{width:min(100%,326px);text-align:center}.text-card h2{margin:0 0 22px;font-size:var(--f-hero);line-height:1.5;overflow-wrap:anywhere}.text-body{margin:0;font-size:var(--f-body);line-height:1.85;font-weight:550;white-space:pre-line;overflow-wrap:anywhere}.text-body.is-long{text-align:left}
+.footer{flex:none;display:grid;grid-template-columns:44px 44px minmax(0,1fr) 44px;gap:2px;align-items:center;min-height:66px;padding:8px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid rgb(203 209 204 / .4);background:var(--page-bg)}
+.next-button{min-height:44px;padding:8px 4px;background:transparent;border:0;color:var(--accent);font-size:.8125rem;font-weight:600;line-height:1.5;border-radius:12px}.next-button:hover{background:var(--surface-warm)}
+.failure-panel{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--surface-green);color:var(--muted);text-align:center;font-size:.875rem;padding:12px}.failure-panel p{margin:0;line-height:1.6}.failure-panel button{border:1px solid var(--line);background:var(--surface);padding:8px 12px;min-height:44px;border-radius:12px;color:var(--accent)}
+dialog{position:fixed;inset:0;margin:auto;border:1px solid rgb(203 209 204 / .6);border-radius:var(--r-dialog);padding:0;width:min(350px,calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);max-height:min(84dvh,calc(100dvh - 32px));background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgb(20 40 30 / .18);overflow:hidden}
+dialog::backdrop{background:rgb(32 51 45 / .38)}.dialog-layout{display:flex;flex-direction:column;max-height:inherit;min-height:0}.dialog-head{padding:22px 22px 10px;flex:none}.dialog-head h2{margin:0;font-size:1.375rem;line-height:1.5;font-weight:750}.dialog-head p{margin:6px 0 0;font-size:.8125rem;line-height:1.6;color:var(--muted)}
+.dialog-body{padding:0 22px 14px;overflow:auto;overscroll-behavior:contain;min-height:0;flex:1}.error-reason{white-space:pre-line;font-size:1rem;line-height:1.75;margin:6px 0 0;overflow-wrap:anywhere}.dialog-actions{flex:none;padding:12px 22px 20px;display:grid;gap:10px;border-top:1px solid rgb(203 209 204 / .5)}
+.btn{width:100%;min-height:48px;padding:11px 14px;border:0;border-radius:14px;font-size:1rem;line-height:1.5;font-weight:650;text-align:center}.btn-primary{background:var(--accent);color:#fff}.btn-secondary{background:var(--surface-green);color:var(--accent)}#errorTitle{color:var(--danger)}
+.control-label{display:block;margin:16px 0 6px;font-size:.875rem;line-height:1.6;font-weight:650}.control-label:first-child{margin-top:8px}.control-select{display:block;width:100%;min-height:44px;padding:8px 10px;background:var(--page-bg);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-size:.875rem;line-height:1.6}
+.check-row{display:flex;align-items:flex-start;gap:10px;margin:16px 0 0;font-size:.875rem;line-height:1.6}.check-row input{width:18px;height:18px;flex:none;accent-color:var(--accent);margin-top:2px}.menu-note{font-size:.75rem;line-height:1.7;color:var(--muted);margin:14px 0 0}
+@media(min-width:620px){.app-shell{width:390px;height:min(900px,calc(100dvh - 28px));border:1px solid rgb(203 209 204 / .7);border-radius:30px;box-shadow:0 20px 58px rgb(19 34 29 / .12)}}
+@media(max-height:650px){.app-header{min-height:68px;padding-top:calc(5px + env(safe-area-inset-top));padding-bottom:5px}.screen{padding-top:18px;padding-bottom:20px}.scene-stack{gap:14px}.footer{min-height:60px;padding-top:4px;padding-bottom:calc(6px + env(safe-area-inset-bottom))}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Focus handoff preview: the readable lead yields to the full-size image. */
+.prelude{font-size:1rem;line-height:1.6;font-weight:550;color:var(--muted)}
+.hero-copy{font-size:2rem;line-height:1.55}
+
+/* Reading is a scrollable layout, not an overlay over the hidden image. */
+.screen.reading .scene-stack{display:none}
+.screen.reading .intro-layer{position:relative;inset:auto;flex:1;min-height:100%;margin-block:auto;display:flex;align-items:center;justify-content:center;padding:28px 0}
+.screen.reading .hero-copy{font-size:1.75rem;line-height:1.65}
+.screen[data-kind="guide"] .hero-copy{font-size:1.75rem}
+
+/* Course content adapter; frozen layout and interactions stay in components.css/app.js. */
+.diagram-layer,.object-label,.placeholder-name,.detail-control{display:none!important}
+.text-card h2:empty{display:none}
+.image-annotations,.label-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.label-lines{overflow:visible;stroke:var(--accent);stroke-width:.36;fill:var(--accent)}
+.image-label{position:absolute;z-index:1;transform:translate(-50%,-50%);max-width:55%;padding:2px 5px;border:1px solid rgb(39 91 75 / .45);border-radius:6px;background:rgb(255 255 255 / .94);color:var(--ink);font-size:clamp(11px,.72rem,14px);line-height:1.35;font-weight:700;text-align:center;white-space:nowrap;box-shadow:0 1px 3px rgb(31 49 43 / .12)}
+.screen[data-id="FINAL"] .text-body { white-space: pre-line; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app">
+ <div class="main-ui" id="mainUI">
+  <header class="app-header">
+   <button class="icon-button" id="menuButton" aria-label="打开阅读设置"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
+   <div class="header-copy"><p class="brand">超敏反应</p><h1 class="title" id="pageTitle">总体介绍</h1></div>
+   <span class="count" id="pageCount" aria-label="当前页"></span>
+  </header>
+  <main id="course" class="course" aria-label="超敏反应互动内容" tabindex="-1"></main>
+  <nav class="footer" aria-label="预览控制">
+   <button class="icon-button" id="prevButton" aria-label="上一页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button>
+   <button class="icon-button" id="replayButton" aria-label="重播当前页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7a8 8 0 1 1-1 8M5 3v5h5"/></svg></button>
+   <button class="next-button" id="nextButton">看完整</button>
+   <button class="icon-button" id="pauseButton" aria-label="暂停播放"><svg viewBox="0 0 24 24" aria-hidden="true"><path id="pausePath" d="M9 5v14M15 5v14"/></svg></button>
+  </nav>
+ </div>
+ <div class="sr-only" id="announcer" aria-live="polite" aria-atomic="true"></div>
+</div>
+<dialog id="errorDialog" aria-labelledby="errorTitle">
+ <div class="dialog-layout">
+  <header class="dialog-head"><h2 id="errorTitle" tabindex="-1">这次选错了</h2></header>
+  <div class="dialog-body"><p class="error-reason" id="errorReason"></p></div>
+  <footer class="dialog-actions"><button class="btn btn-primary" id="retryButton">重新作答</button><button class="btn btn-secondary" id="explainButton">继续</button></footer>
+ </div>
+</dialog>
+<dialog id="settingsDialog" aria-labelledby="settingsTitle">
+ <div class="dialog-layout">
+  <header class="dialog-head"><h2 id="settingsTitle" tabindex="-1">阅读设置</h2></header>
+  <form class="dialog-body" id="settingsForm">
+   <select class="control-select" id="sampleSelect" hidden><option value="flow">完整体验</option></select>
+   <select class="control-select" id="lengthSelect" hidden><option value="short">短句</option></select>
+   <label class="control-label" for="modeSelect">普通页面推进</label><select class="control-select" id="modeSelect"><option value="manual">上滑／点击继续</option></select>
+   <label class="control-label" for="scaleSelect">文字大小</label><select class="control-select" id="scaleSelect"><option value="1">100%</option><option value="1.25">125%</option><option value="1.5">150%</option><option value="2">200%</option></select>
+   <label class="check-row"><input type="checkbox" id="reducedInput"><span>减少动态效果（也会遵循系统设置）</span></label>
+   <p class="menu-note">返回保留进度；重播才重新演示。长页先滚动，再翻页。</p>
+  </form>
+  <footer class="dialog-actions"><button class="btn btn-primary" id="applyButton">应用并预览</button><button class="btn btn-secondary" id="closeSettingsButton">返回当前页面</button></footer>
+ </div>
+</dialog>
+<noscript><p style="padding:24px">此预览需要 JavaScript。请将完整 HTML 保存在设备上并用浏览器打开。</p></noscript>
+<script>/* Frozen 4.1.3 shell; full-course working draft. */
+const TEMPLATE_TIMING = Object.freeze({introChar:180,captionChar:82,introHold:1000,dock:1200,imageStable:1300,localChange:1800,answerConfirm:420,frameReadMin:1800,autoReadMin:2800});
+const VISUAL_EFFECTS = Object.freeze([{id:"focus",name:"聚焦",duration:650}]);
+const COURSE_DECK = [{"id": "I01", "kind": "guide", "title": "总体介绍", "body": "免疫反应本来在做什么？"}, {"id": "I02", "kind": "teach", "title": "总体介绍", "intro": "免疫细胞清除抗原，周围自身组织保持完整", "captions": ["免疫细胞清除抗原，周围自身组织保持完整"], "image": "assets/intro-normal.webp", "alt": "蓝色免疫细胞内可见橙色抗原，下方粉色自身组织保持完整", "labels": [{"text": "免疫细胞", "x": 29, "y": 10, "to_x": 39, "to_y": 35}, {"text": "抗原", "x": 80, "y": 24, "to_x": 65, "to_y": 43}, {"text": "自身组织", "x": 52, "y": 91, "to_x": 50, "to_y": 72}], "ratio": "square", "frames": 1, "detail": false}, {"id": "I03", "kind": "guide", "title": "总体介绍", "body": "抗原已经清除了，为什么组织也受伤了？"}, {"id": "I04", "kind": "teach", "title": "总体介绍", "intro": "免疫反应在清除抗原的同时损伤周围自身组织", "captions": ["免疫反应在清除抗原的同时损伤周围自身组织"], "image": "assets/intro-hypersensitivity.webp", "alt": "蓝色免疫细胞位于上方，下方粉色自身组织已经受损", "labels": [{"text": "免疫细胞", "x": 27, "y": 11, "to_x": 45, "to_y": 36}, {"text": "受损的自身组织", "x": 63, "y": 91, "to_x": 55, "to_y": 73}], "ratio": "square", "frames": 1, "detail": false}, {"id": "I05", "kind": "text", "title": "总体介绍", "intro": "", "body": "当免疫反应造成自身组织损伤时，就称为超敏反应。损伤方式不同，因此分为Ⅰ、Ⅱ、Ⅲ、Ⅳ型。"}, {"id": "T11", "kind": "guide", "title": "Ⅰ型 · 青霉素过敏性休克", "body": "青霉素过敏性休克是怎么发生的？"}, {"id": "T12", "kind": "teach", "title": "Ⅰ型 · 首次接触", "intro": "易感者首次接触相关致敏物质后，可产生特异性免疫球蛋白E（IgE）。IgE预先结合在肥大细胞表面。", "captions": ["易感者首次接触相关致敏物质后，可产生特异性免疫球蛋白E（IgE）。IgE预先结合在肥大细胞表面。"], "image": "assets/type1-first-exposure-ige-v1.webp", "alt": "橙色致敏物质在上方，左侧细胞产生IgE，蓝色Y形IgE预先结合到右侧肥大细胞表面", "labels": [{"text": "致敏物质", "x": 14, "y": 15, "to_x": 10, "to_y": 30}, {"text": "产生IgE的细胞", "x": 23, "y": 88, "to_x": 25, "to_y": 59}, {"text": "IgE", "x": 47, "y": 22, "to_x": 44, "to_y": 39}, {"text": "肥大细胞", "x": 77, "y": 88, "to_x": 77, "to_y": 56}], "ratio": "square", "frames": 1, "detail": false}, {"id": "T14", "kind": "teach", "title": "Ⅰ型 · 再次接触", "intro": "再次接触相关抗原时，肥大细胞迅速释放已储存的介质，因而反应发生快。", "captions": ["再次接触相关抗原时，肥大细胞迅速释放已储存的介质，因而反应发生快。"], "image": "assets/type1-after.webp", "alt": "相关抗原接触肥大细胞表面的IgE，肥大细胞向外释放蓝色示意介质", "labels": [{"text": "相关抗原", "x": 53, "y": 7, "to_x": 50, "to_y": 14}, {"text": "IgE", "x": 23, "y": 20, "to_x": 27, "to_y": 31}, {"text": "肥大细胞", "x": 43, "y": 88, "to_x": 48, "to_y": 61}, {"text": "释放的介质", "x": 79, "y": 76, "to_x": 90, "to_y": 61}], "ratio": "square", "frames": 1, "detail": false}, {"id": "Q01", "kind": "question", "title": "练习 · Ⅰ型", "intro": "", "stem": "这些免疫球蛋白E会在哪里提前做好准备？", "correct": 0, "options": [{"text": "结合到肥大细胞表面", "reason": ""}, {"text": "一直游离在血液中", "reason": "IgE结合在肥大细胞表面，使肥大细胞处于致敏状态。"}], "review": "T13"}, {"id": "Q02", "kind": "question", "title": "练习 · Ⅰ型", "intro": "", "stem": "同一种青霉素再次进入后，肥大细胞会怎样？", "correct": 0, "options": [{"text": "立即释放已经储存的介质", "reason": ""}, {"text": "继续保持原来的状态", "reason": "再次接触同一抗原后，已经致敏的肥大细胞会迅速释放介质。"}], "review": "T16"}, {"id": "T16", "kind": "text", "title": "本问题总结", "intro": "", "body": "青霉素过敏性休克属于Ⅰ型（速发型）超敏反应。Ⅰ型还包括支气管哮喘、荨麻疹。"}, {"id": "II01", "kind": "guide", "title": "Ⅱ型 · 血型不合输血", "body": "输入ABO血型不合的红细胞后，为什么会发生溶血？"}, {"id": "II02", "kind": "teach", "title": "Ⅱ型 · 受血者", "intro": "以A型受血者为例：其红细胞表面有A抗原，血浆中预先存在抗B抗体。", "captions": ["以A型受血者为例：其红细胞表面有A抗原，血浆中预先存在抗B抗体。"], "image": "assets/type2-before-v2.webp", "alt": "A型受血者自身红细胞表面有青色A抗原，抗B抗体游离在周围", "labels": [{"text": "受血者红细胞", "x": 53, "y": 88, "to_x": 54, "to_y": 65}, {"text": "A抗原", "x": 52, "y": 13, "to_x": 51, "to_y": 28}, {"text": "抗B抗体", "x": 17, "y": 10, "to_x": 25, "to_y": 24}], "ratio": "square", "frames": 1, "detail": false}, {"id": "II03", "kind": "teach", "title": "Ⅱ型 · 抗体结合", "intro": "当输入带B抗原的红细胞时，抗B抗体结合输入红细胞表面的B抗原。", "captions": ["当输入带B抗原的红细胞时，抗B抗体结合输入红细胞表面的B抗原。"], "image": "assets/type2-bound-v2.webp", "alt": "输入的B抗原红细胞表面，抗B抗体以臂端接触橙色B抗原", "labels": [{"text": "输入的红细胞", "x": 50, "y": 88, "to_x": 52, "to_y": 62}, {"text": "B抗原", "x": 51, "y": 8, "to_x": 51, "to_y": 27}, {"text": "抗B抗体", "x": 22, "y": 16, "to_x": 27, "to_y": 38}], "ratio": "square", "frames": 1, "detail": false}, {"id": "II04", "kind": "teach", "title": "Ⅱ型 · 红细胞受损", "intro": "补体参与并使输入的红细胞受到破坏。", "captions": ["补体参与并使输入的红细胞受到破坏。"], "image": "assets/type2-after-v2.webp", "alt": "输入红细胞表面有已结合的抗B抗体，右侧补体参与并出现膜损伤", "labels": [{"text": "输入的红细胞", "x": 45, "y": 91, "to_x": 49, "to_y": 66}, {"text": "抗B抗体", "x": 22, "y": 13, "to_x": 26, "to_y": 40}, {"text": "补体参与", "x": 82, "y": 35, "to_x": 78, "to_y": 48}, {"text": "膜损伤", "x": 85, "y": 73, "to_x": 79, "to_y": 62}], "ratio": "square", "frames": 1, "detail": false}, {"id": "Q03", "kind": "question", "title": "练习 · Ⅱ型", "intro": "", "stem": "这些抗体会先和哪里结合？", "correct": 0, "options": [{"text": "红细胞表面的固定抗原", "reason": ""}, {"text": "血液中游离的抗原", "reason": "Ⅱ型的抗体结合细胞表面的固定抗原；抗体与游离抗原形成复合物更符合Ⅲ型。"}], "review": "II03"}, {"id": "Q04", "kind": "question", "title": "练习 · Ⅱ型", "intro": "", "stem": "抗体与红细胞表面抗原结合以后，接下来会怎样？", "correct": 0, "options": [{"text": "补体等参与并造成红细胞损伤", "reason": ""}, {"text": "形成复合物后随血流移动", "reason": "抗体结合红细胞后，补体等参与并造成损伤；可溶性复合物随血流移动属于Ⅲ型路径。"}], "review": "II04"}, {"id": "II05", "kind": "text", "title": "本问题总结", "intro": "", "body": "血型不合输血反应属于Ⅱ型（细胞毒型）超敏反应。Ⅱ型还包括系统性红斑狼疮（SLE）的血细胞损伤、急性血管型排斥反应、肺出血－肾炎综合征和超急性排斥反应。"}, {"id": "III01", "kind": "guide", "title": "Ⅲ型 · 肾小球损伤", "body": "血液中的抗原与抗体结合后，为什么会损伤肾小球？"}, {"id": "III02", "kind": "teach", "title": "Ⅲ型 · 复合物形成", "intro": "抗原与抗体在血液中形成可溶性免疫复合物，部分复合物随血流到达肾小球。", "captions": ["抗原与抗体在血液中形成可溶性免疫复合物，部分复合物随血流到达肾小球。"], "image": "assets/type3-before-v1.webp", "alt": "免疫复合物随血流进入肾小球毛细血管袢", "labels": [{"text": "肾小球", "x": 50, "y": 91, "to_x": 52, "to_y": 57}, {"text": "血液中的免疫复合物", "x": 20, "y": 9, "to_x": 29, "to_y": 21}, {"text": "毛细血管袢", "x": 73, "y": 73, "to_x": 66, "to_y": 57}], "ratio": "square", "frames": 1, "detail": false}, {"id": "III03", "kind": "teach", "title": "Ⅲ型 · 局部炎症", "intro": "免疫复合物沉积后，可激活补体并引起局部炎症，造成肾小球损伤。", "captions": ["免疫复合物沉积后，可激活补体并引起局部炎症，造成肾小球损伤。"], "image": "assets/type3-after-v2.webp", "alt": "免疫复合物聚集于肾小球毛细血管袢，黄色点表示补体参与的局部炎症", "labels": [{"text": "肾小球", "x": 50, "y": 91, "to_x": 51, "to_y": 57}, {"text": "免疫复合物", "x": 18, "y": 47, "to_x": 29, "to_y": 54}, {"text": "补体参与", "x": 81, "y": 67, "to_x": 76, "to_y": 47}], "ratio": "square", "frames": 1, "detail": false}, {"id": "Q05", "kind": "question", "title": "练习 · Ⅲ型", "intro": "", "stem": "抗原与抗体在血液中相遇后，会先形成什么？", "correct": 0, "options": [{"text": "可溶性的免疫复合物", "reason": ""}, {"text": "直接贴在某个细胞表面", "reason": "Ⅲ型先形成可溶性免疫复合物；抗体直接结合细胞表面属于Ⅱ型。"}], "review": "III02"}, {"id": "Q06", "kind": "question", "title": "练习 · Ⅲ型", "intro": "", "stem": "这些复合物到达肾小球后，哪一步会造成局部损伤？", "correct": 0, "options": [{"text": "沉积在组织并引起炎症", "reason": ""}, {"text": "继续随血流通过", "reason": "免疫复合物沉积并引起炎症，才会造成局部损伤。"}], "review": "III03"}, {"id": "III04", "kind": "text", "title": "本问题总结", "intro": "", "body": "免疫复合物性肾小球肾炎属于Ⅲ型（免疫复合物型）超敏反应。Ⅲ型还包括SLE的内脏损伤、类风湿关节炎。"}, {"id": "IV01", "kind": "guide", "title": "Ⅳ型 · 结核菌素试验", "body": "为什么结核菌素皮肤试验要等两三天再看结果？"}, {"id": "IV02", "kind": "teach", "title": "Ⅳ型 · 效应T细胞迁入", "intro": "结核菌素经皮内注射后，在已致敏者体内，效应T细胞逐渐到达注射部位。", "captions": ["结核菌素经皮内注射后，在已致敏者体内，效应T细胞逐渐到达注射部位。"], "image": "assets/type4-before-v2.webp", "alt": "皮内注射后，蓝色效应T细胞由血管向局部迁入", "labels": [{"text": "皮内注射部位", "x": 52, "y": 9, "to_x": 50, "to_y": 26}, {"text": "效应T细胞", "x": 25, "y": 78, "to_x": 32, "to_y": 76}, {"text": "局部组织", "x": 78, "y": 60, "to_x": 60, "to_y": 58}], "ratio": "square", "frames": 1, "detail": false}, {"id": "IV03", "kind": "teach", "title": "Ⅳ型 · 迟发炎症", "intro": "效应T细胞介导局部炎症；皮肤试验结果通常在注射后48～72小时读取。", "captions": ["效应T细胞介导局部炎症；皮肤试验结果通常在注射后48～72小时读取。"], "image": "assets/type4-after.webp", "alt": "效应T细胞参与皮肤局部炎症，结果在注射后48～72小时读取", "labels": [{"text": "局部炎症", "x": 51, "y": 30, "to_x": 50, "to_y": 48}, {"text": "效应T细胞", "x": 46, "y": 68, "to_x": 51, "to_y": 60}, {"text": "皮肤", "x": 77, "y": 9, "to_x": 74, "to_y": 24}], "ratio": "square", "frames": 1, "detail": false}, {"id": "Q07", "kind": "question", "title": "练习 · Ⅳ型", "intro": "", "stem": "这类反应主要等谁到达局部？", "correct": 0, "options": [{"text": "已经形成的效应T细胞", "reason": ""}, {"text": "抗体和肥大细胞", "reason": "Ⅳ型主要由效应T细胞介导；抗体和肥大细胞主要提示Ⅰ型。"}], "review": "IV02"}, {"id": "Q08", "kind": "question", "title": "练习 · Ⅳ型", "intro": "", "stem": "为什么反应通常要过一段时间才出现？", "correct": 0, "options": [{"text": "效应T细胞需要从血液进入局部", "reason": ""}, {"text": "肥大细胞正在立即释放介质", "reason": "效应T细胞到达局部并引起炎症需要时间；肥大细胞迅速释放介质主要提示Ⅰ型。"}], "review": "IV03"}, {"id": "IV04", "kind": "text", "title": "本问题总结", "intro": "", "body": "结核菌素皮肤试验的迟发反应属于Ⅳ型超敏反应。Ⅳ型还包括结核病、血吸虫虫卵结节和急性细胞型排斥反应。"}, {"id": "Q09", "kind": "question", "title": "辨析 · 系统性红斑狼疮", "intro": "", "stem": "系统性红斑狼疮中，哪种损伤属于Ⅲ型超敏反应？", "correct": 1, "options": [{"text": "血细胞损伤", "reason": "SLE的血细胞损伤属于Ⅱ型；内脏损伤属于Ⅲ型。"}, {"text": "内脏损伤", "reason": ""}], "review": "III04"}, {"id": "Q10", "kind": "question", "title": "辨析 · 移植排斥", "intro": "", "stem": "哪种排斥反应主要由T细胞介导，属于Ⅳ型？", "correct": 2, "options": [{"text": "超急性排斥反应", "reason": "超急性排斥反应由预存抗体介导，按Ⅱ型处理。"}, {"text": "急性血管型排斥反应", "reason": "急性血管型排斥反应以抗体介导的血管损伤为主，属于Ⅱ型。"}, {"text": "急性细胞型排斥反应", "reason": ""}], "review": "IV04"}, {"id": "FINAL", "kind": "text", "title": "四型疾病核对", "intro": "", "body": "Ⅰ型：青霉素过敏性休克、支气管哮喘、荨麻疹。\nⅡ型：血型不合输血反应、SLE血细胞损伤、急性血管型排斥反应、肺出血－肾炎综合征、超急性排斥反应。\nⅢ型：SLE内脏损伤、类风湿关节炎、免疫复合物性肾小球肾炎。\nⅣ型：结核病、结核菌素试验、血吸虫虫卵结节、急性细胞型排斥反应。"}];
+function createDeck(){return COURSE_DECK;}
+</script>
+<script>'use strict';
+(() => {
+ const $ = (q,root=document)=>root.querySelector(q);
+ const $$ = (q,root=document)=>[...root.querySelectorAll(q)];
+ const app=$('#app'), main=$('#mainUI'), course=$('#course');
+ const settingsDialog=$('#settingsDialog'), errorDialog=$('#errorDialog');
+ const media=window.matchMedia('(prefers-reduced-motion: reduce)');
+ const abortName='AbortError';
+ const prefs={sample:'flow',length:'short',mode:'manual',scale:1,reduced:false};
+ let deck=[], cache=new Map(), current=0, lastEffect='', activeDialog=null, modalTrigger=null;
+ let manualPaused=false, docHidden=document.hidden, lastTick=performance.now();
+ let blockClickUntil=0, touch=null, navGuardUntil=0, resizeQueued=false, fontReady=false;
+ const traces=[];
+ const isReduced=()=>prefs.reduced||media.matches;
+ const paused=()=>manualPaused||docHidden||Boolean(activeDialog);
+ const rect=e=>e.getBoundingClientRect();
+ const clamp=(v,a,b)=>Math.max(a,Math.min(v,b));
+ const ease=p=>1-Math.pow(1-p,3);
+ const announce=t=>$('#announcer').textContent=t;
+ const trace=(event,extra={})=>{traces.push({event,page:current,time:Math.round(performance.now()),...extra});if(traces.length>900)traces.shift();};
+ function savePrefs(){try{localStorage.setItem('material-template-v4-swipe-prefs',JSON.stringify(prefs));}catch{/* file:// or private mode may deny storage */}}
+ try {const v=JSON.parse(localStorage.getItem('material-template-v4-swipe-prefs')||'null');if(v){for(const k of Object.keys(prefs)) if(k in v) prefs[k]=v[k];}}catch{}
+ if(!['manual','auto'].includes(prefs.mode))prefs.mode='manual';
+ if(![1,1.25,1.5,2].includes(Number(prefs.scale)))prefs.scale=1;
+ document.documentElement.style.fontSize=`${16*Number(prefs.scale)}px`;
+ function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
+ function icon(path){const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 24 24');s.setAttribute('aria-hidden','true');const p=document.createElementNS(s.namespaceURI,'path');p.setAttribute('d',path);s.append(p);return s;}
+ function makeButton(cls,label,path){const b=el('button',cls,path?undefined:label);b.type='button';b.setAttribute('aria-label',label);if(path)b.append(icon(path));return b;}
+ function makeTyped(target,text){
+  target.replaceChildren();target.classList.add('typed-string');target.setAttribute('aria-label',text);
+  for(const ch of [...text]){const s=el('span','char',ch);s.setAttribute('aria-hidden','true');target.append(s);}
+  return [...target.children];
+ }
+ function showChars(chars,count){for(let i=0;i<chars.length;i++)chars[i].style.opacity=i<count?'1':'0';}
+ function chooseFx(){return {id:'focus-handoff',duration:650};}
+
+ /* A single active-time clock drives ordered phases. No independent setTimeout chains.
+    Hidden documents, dialogs and explicit pause stop both playback and auto-advance. */
+ class Runner {
+  constructor(owner,tasks){this.owner=owner;this.tasks=tasks;this.index=0;this.elapsed=0;this.started=false;this.done=false;}
+  tick(delta){
+   if(this.done)return;const task=this.tasks[this.index];if(!task){this.finish();return;}
+   if(!this.started){task.start?.();this.started=true;this.owner.phase=task.id;trace('phase-start',{phase:task.id});}
+   this.elapsed+=delta;const duration=isReduced()&&['intro-type','dock','image-enter','local-change','caption-type'].includes(task.id)?0:task.duration;const p=duration?clamp(this.elapsed/duration,0,1):1;
+   task.update?.(p);
+   if(p>=1){task.end?.();trace('phase-end',{phase:task.id});this.index++;this.elapsed=0;this.started=false;if(this.index>=this.tasks.length)this.finish();}
+  }
+  finish(){if(this.done)return;this.done=true;this.owner.phase='done';this.owner.done=true;this.owner.autoElapsed=0;updateControls();}
+  skipCurrentTyping(){
+   const task=this.tasks[this.index];if(!task||!['intro-type','caption-type'].includes(task.id))return false;
+   if(!this.started){task.start?.();this.started=true;}
+   task.update?.(1);task.end?.();this.index++;this.elapsed=0;this.started=false;
+   if(this.index>=this.tasks.length)this.finish();return true;
+  }
+ }
+ function createVisual(v,{question=false}={}){
+  const figure=el('figure','visual-module');
+  const stage=el('div','visual-stage'); const art=el('div','artboard');
+  const img=el('img','blank-image');img.alt=v.data.alt||'';img.src=v.data.image;img.decoding='async';
+  const diagram=el('div','diagram-layer');diagram.setAttribute('aria-hidden','true');
+  const symbol=el('div','diagram-symbol');diagram.append(symbol);
+  const dots=[0,1,2].map(()=>el('i','symbol-dot'));dots.forEach(d=>diagram.append(d));
+  const a=el('span','object-label a','甲');const b=el('span','object-label b','乙');
+  const name=el('span','placeholder-name','空白图形');
+  const map=el('span','detail-map');map.hidden=true;
+  art.append(img,diagram,a,b,name,map);
+  if(v.data.labels?.length){
+   const layer=el('div','image-annotations');layer.setAttribute('aria-hidden','true');
+   const lines=document.createElementNS('http://www.w3.org/2000/svg','svg');lines.setAttribute('viewBox','0 0 100 100');lines.setAttribute('preserveAspectRatio','none');lines.classList.add('label-lines');
+   for(const item of v.data.labels){
+    const line=document.createElementNS(lines.namespaceURI,'line');for(const [key,value] of Object.entries({x1:item.x,y1:item.y,x2:item.to_x,y2:item.to_y}))line.setAttribute(key,String(value));lines.append(line);
+    const dot=document.createElementNS(lines.namespaceURI,'circle');dot.setAttribute('cx',String(item.to_x));dot.setAttribute('cy',String(item.to_y));dot.setAttribute('r','.8');lines.append(dot);
+    const tag=el('span','image-label',item.text);tag.style.left=item.x+'%';tag.style.top=item.y+'%';layer.append(tag);
+   }
+   layer.prepend(lines);art.append(layer);
+  }
+  stage.append(art);
+  const fail=el('div','failure-panel');fail.hidden=true;fail.append(el('p','','图片暂不可用'),el('p','','上方解释仍可阅读，也可以继续。'));
+  const retry=makeButton('','重试图片');retry.addEventListener('click',()=>{fail.hidden=true;img.hidden=false;diagram.hidden=false;img.src=v.data.image;});fail.append(retry);stage.append(fail);
+  img.addEventListener('error',()=>{fail.hidden=false;img.hidden=true;diagram.hidden=true;trace('image-error');});
+  img.addEventListener('load',()=>{fail.hidden=true;img.hidden=false;diagram.hidden=false;});
+  figure.append(stage);let caption=null;
+  if(!question){caption=el('figcaption','visual-caption');const ct=el('span','caption-text');caption.append(ct);caption.hidden=true;v.captionText=ct;}
+  if(v.data.detail&&!question){
+   const detail=makeButton('detail-control','局部');detail.dataset.action='detail';detail.addEventListener('click',()=>{
+    if(!v.done)finishView(v,{frame:v.frame});v.detail=!v.detail;figure.classList.toggle('is-detail',v.detail);map.hidden=!v.detail;detail.textContent=v.detail?'还原':'局部';detail.setAttribute('aria-label',v.detail?'返回整体':'查看指定局部');trace('detail',{active:v.detail});
+   });stage.append(detail);v.detailButton=detail;
+  }
+  Object.assign(v,{figure,visualStage:stage,art,img,diagram,dots,labelA:a,labelB:b,caption,symbol,map,fail});
+  setGraphic(v,0,1);return figure;
+ }
+ const symbolPositions=[[[.21,.3],[.78,.35],[.31,.69]],[[.39,.42],[.61,.46],[.48,.64]],[[.47,.35],[.63,.55],[.37,.6]]];
+ function setGraphic(v,frame,progress){
+  if(!v.dots)return;const src=symbolPositions[frame%2],dst=symbolPositions[(frame%2)+1];
+  v.dots.forEach((dot,i)=>{const p=ease(progress);dot.style.left=`${100*(src[i][0]+(dst[i][0]-src[i][0])*p)}%`;dot.style.top=`${100*(src[i][1]+(dst[i][1]-src[i][1])*p)}%`;dot.classList.toggle('active',p>.6);});
+  v.symbol.style.background=frame>0?'#C7DBD1':'#DCE9E2';
+ }
+ function setCaption(v,frame,{hidden=false}={}){
+  const t=v.data.captions?.[frame]||'';if(v.prelude){v.prelude.textContent=t;v.prelude.style.cssText='';}if(!v.captionText)return;
+  v.captionChars=makeTyped(v.captionText,t);showChars(v.captionChars,hidden?0:v.captionChars.length);v.frame=frame;
+  if(v.frameCount)v.frameCount.textContent=`${frame+1} / ${v.data.frames}`;
+  v.figure?.setAttribute('aria-label',`${v.data.alt||'教学图片'}，${t}`);
+ }
+ function createQuestion(v){
+  const q=el('div','question-card');q.append(el('p','q-context',v.data.intro));
+  const stem=el('h2','q-stem',v.data.stem);if(v.data.stem.length>28)stem.classList.add('is-long');q.append(stem);
+  const options=el('div','options');options.setAttribute('role','group');options.setAttribute('aria-label','请选择一项');
+  v.options=v.data.options.map((o,i)=>{const b=makeButton('option',`${String.fromCharCode(65+i)} ${o.text}`);b.dataset.option=String(i);b.replaceChildren(el('span','chip',String.fromCharCode(65+i)),el('span','option-copy',o.text));b.addEventListener('click',()=>answer(v,i));options.append(b);return b;});
+  q.append(options);v.note=el('p','answer-note');v.note.setAttribute('aria-live','polite');q.append(v.note);v.question=q;return q;
+ }
+ function createView(data){
+  const v={data,phase:'new',frame:0,done:false,answer:null,answerElapsed:null,autoElapsed:0,scroll:0,fx:data.kind==='teach'?chooseFx():VISUAL_EFFECTS[0],detail:false,events:[]};
+  const root=el('section',`screen ${data.kind==='imageQuestion'?'image-question':''}`);root.dataset.id=data.id;root.dataset.kind=data.kind;root.setAttribute('aria-label',data.title);root.hidden=true;v.root=root;
+  const stack=el('div','scene-stack');root.append(stack);v.stack=stack;
+  if(data.kind==='teach'){
+   v.prelude=el('p','prelude',data.captions[0]||data.intro);stack.append(v.prelude,createVisual(v));
+   if(data.frames>1){
+    const nav=el('div','frame-nav');const back=makeButton('icon-button','上一状态','m14 7-5 5 5 5'),forward=makeButton('icon-button','下一状态','m10 7 5 5-5 5');
+    v.frameCount=el('span','frame-count','1 / '+data.frames);nav.append(back,v.frameCount,forward);stack.append(nav);v.frameNav=nav;
+    back.addEventListener('click',()=>selectFrame(v,Math.max(0,v.frame-1)));forward.addEventListener('click',()=>selectFrame(v,Math.min(data.frames-1,v.frame+1)));
+   }
+   const intro=el('div','intro-layer');v.hero=el('p','hero-copy');v.hero.tabIndex=-1;v.introChars=makeTyped(v.hero,data.captions[0]||data.intro);intro.append(v.hero);root.append(intro);v.introLayer=intro;
+   v.hero.addEventListener('click',()=>{v.runner?.skipCurrentTyping();});
+  }else if(data.kind==='guide'){
+   v.hero=el('p','hero-copy');v.introChars=makeTyped(v.hero,data.body);stack.append(v.hero);
+  }else if(data.kind==='question'||data.kind==='imageQuestion'){
+   if(data.kind==='imageQuestion')stack.append(createVisual(v,{question:true}));stack.append(createQuestion(v));v.done=true;v.phase='question';
+  }else{
+   const card=el('div','text-card');const heading=el('h2','',data.intro);const body=el('p','text-body',data.body);if(data.body.length>30)body.classList.add('is-long');card.append(heading,body);stack.append(card);v.done=true;v.phase='done';
+  }
+  course.append(root);return v;
+ }
+ function fxStyle(v,p){
+  const e=ease(p),st=v.figure.style;
+  st.opacity=String(e);st.transform=`scale(${.72+.28*e})`;
+  st.transformOrigin='50% 45%';st.filter='none';st.clipPath='none';
+ }
+ function visualVisible(v){if(!v.figure)return;if(v.frameNav){v.frameNav.style.visibility='visible';v.frameNav.inert=false;}v.figure.inert=false;v.figure.style.opacity='1';v.figure.style.transform='none';v.figure.style.filter='none';v.figure.style.clipPath='none';v.figure.removeAttribute('aria-hidden');}
+ function prepareSequence(v){
+  v.done=false;v.phase=isReduced()?'await-image':'teach-text-enter';v.root.classList.add('reading');v.answerElapsed=null;v.autoElapsed=0;v.detail=false;
+  v.figure?.classList.remove('is-detail');if(v.detailButton){v.detailButton.textContent='局部';v.detailButton.setAttribute('aria-label','查看指定局部');}if(v.map)v.map.hidden=true;
+  v.prelude.style.opacity='1';v.prelude.style.visibility='hidden';v.caption.style.visibility='hidden';if(v.frameNav){v.frameNav.style.visibility='hidden';v.frameNav.inert=true;}v.figure.style.opacity='0';v.figure.setAttribute('aria-hidden','true');v.figure.inert=true;
+  v.introLayer.hidden=false;v.introLayer.style.background='var(--page-bg)';v.hero.style.cssText='';showChars(v.introChars,v.introChars.length);
+  v.entrance=isReduced()?null:{elapsed:0,duration:420};
+  v.hero.style.opacity=isReduced()?'':'0';
+  v.hero.style.transform=isReduced()?'':'translateY(12px)';
+  setCaption(v,0,{hidden:true});setGraphic(v,0,0);
+  const t=TEMPLATE_TIMING;let dockBox;
+  const tasks=[
+   
+   {id:'dock',duration:t.dock,start:()=>{
+     // Move individual glyphs into the final full-width paragraph. Both layouts
+     // are measured once; no live font-size changes or end-of-motion reflow.
+     const starts=v.introChars.map(n=>rect(n));
+     const cs=getComputedStyle(v.hero),font=parseFloat(cs.fontSize);
+     v.root.classList.remove('reading');course.scrollTop=0;
+     v.prelude.style.cssText='visibility:hidden;font-weight:600;line-height:1.65';
+     const chars=makeTyped(v.prelude,v.data.captions[0]||v.data.intro);
+     chars.forEach(n=>{n.style.display='inline-block';n.style.whiteSpace='pre';});
+     layoutView(v);
+     const scale=font/parseFloat(getComputedStyle(v.prelude).fontSize);
+     dockBox={chars,starts,ends:chars.map(n=>rect(n)),scale};
+     chars.forEach(n=>{n.style.transformOrigin='0 0';n.style.willChange='transform';});
+     v.introLayer.hidden=true;v.prelude.style.visibility='visible';
+    },update:p=>{
+     if(!dockBox)return;const {chars,starts,ends,scale}=dockBox;
+     const e=(1-Math.cos(Math.PI*p))/2;
+     chars.forEach((n,i)=>{const from=starts[i],to=ends[i];if(!from)return;n.style.transform=`translate3d(${(from.left-to.left)*(1-e)}px,${(from.top-to.top)*(1-e)}px,0) scale(${1+(scale-1)*(1-e)})`;});
+    },end:()=>{dockBox?.chars.forEach(n=>{n.style.transform='none';n.style.willChange='auto';});v.prelude.style.visibility='visible';}},
+   {id:'image-enter',duration:v.fx.duration,start:()=>v.figure.removeAttribute('aria-hidden'),update:p=>fxStyle(v,p),end:()=>visualVisible(v)},
+   {id:'image-stable',duration:t.imageStable}
+  ];
+  v.pendingTasks=tasks;v.runner=null;
+ }
+ function prepareGuide(v){
+  v.done=false;showChars(v.introChars,0);v.runner=new Runner(v,[
+   {id:'guide-type',duration:v.introChars.length*180,update:p=>showChars(v.introChars,Math.ceil(p*v.introChars.length))},
+   {id:'guide-hold',duration:1000,end:()=>{if(current<deck.length-1)showPage(current+1);}}
+  ]);
+ }
+ function prepareStandaloneExplanation(v){
+  const card=$('.text-card',v.root);if(!card)return;
+  v.done=false;v.phase='text-enter';
+  card.style.opacity='.12';card.style.transform='translateY(10px) scale(.985)';
+  v.runner=new Runner(v,[{id:'text-enter',duration:isReduced()?0:620,
+   update:p=>{const e=(1-Math.cos(Math.PI*p))/2;card.style.opacity=String(.12+.88*e);card.style.transform=`translateY(${10*(1-e)}px) scale(${.985+.015*e})`;},
+   end:()=>{card.style.opacity='';card.style.transform='';}}]);
+ }
+ function finishView(v,{frame=null}={}){
+  if(v.data.kind!=='teach'){v.done=true;if(v.data.id==='I05'){v.runner=null;const card=$('.text-card',v.root);if(card){card.style.opacity='';card.style.transform='';}}return;}
+  if(v.runner)v.runner.done=true;v.entrance=null;v.hero.style.opacity='';v.hero.style.transform='';v.done=true;v.phase='done';v.autoElapsed=0;
+  v.root.classList.remove('reading');v.introLayer.hidden=true;v.prelude.style.opacity='1';v.prelude.style.visibility='visible';visualVisible(v);
+  const f=frame===null?v.data.frames-1:clamp(frame,0,v.data.frames-1);setGraphic(v,f,1);setCaption(v,f);trace('finish-visible');updateControls();
+ }
+ function selectFrame(v,frame){if(!v.done)finishView(v);setGraphic(v,frame,1);setCaption(v,frame);v.autoElapsed=0;trace('frame-select',{frame});updateControls();}
+
+ /* Measure full caption strings (all local states) before revealing any character.
+    Module width and image height are budgeted against the current viewport. Long
+    content has a readability floor; when it exceeds the viewport we allow scroll. */
+ function layoutView(v){
+  if(!v||v.root.hidden||!v.figure)return;
+  const padding=parseFloat(getComputedStyle(v.root).paddingLeft), contentWidth=course.clientWidth-padding*2;
+  const ratio={wide:4/3,square:1,portrait:3/4}[v.data.ratio]||4/3;
+  const cap={wide:326,square:292,portrait:252}[v.data.ratio]||326;
+  const moduleWidth=Math.min(contentWidth,326);
+  v.figure.style.width=`${moduleWidth}px`;
+  let captionHeight=0;
+  if(v.caption&&!v.caption.hidden){
+   const sizer=el('div','visual-caption caption-sizer');sizer.style.width=`${moduleWidth-2}px`;document.body.append(sizer);
+   for(const str of v.data.captions){sizer.textContent=str;captionHeight=Math.max(captionHeight,Math.ceil(sizer.getBoundingClientRect().height));}
+   sizer.remove();captionHeight=Math.max(64,captionHeight);v.caption.style.height=`${captionHeight}px`;v.caption.style.minHeight=`${captionHeight}px`;
+   v.caption.classList.toggle('is-long',captionHeight>86*Number(prefs.scale));
+  }
+  const space=course.clientHeight,top=v.prelude?rect(v.prelude).height:0;
+  const qH=v.question?rect(v.question).height:0;
+  const other=captionHeight+top+(v.data.frames>1?44:0)+qH+76;
+  const budget=Math.min(app.clientHeight*.46,space-other);
+  const floorWidth=Math.min(contentWidth,({wide:252,square:212,portrait:196}[v.data.ratio]||252));
+  let w=clamp(budget*ratio,floorWidth,Math.min(cap,contentWidth));
+  if(v.data.kind==='imageQuestion')w=Math.min(190,contentWidth);
+  v.visualStage.style.height=`${Math.round(w/ratio)}px`;
+  v.art.style.width=`${w}px`;v.art.style.height=`${Math.round(w/ratio)}px`;
+  v.layout={moduleWidth,imageWidth:w,imageHeight:Math.round(w/ratio),captionHeight,viewportHeight:space,budget};
+ }
+ function queueLayout(){if(resizeQueued)return;resizeQueued=true;requestAnimationFrame(()=>{resizeQueued=false;const v=cache.get(current);if(!v)return;
+   /* Resize / user font changes are deliberate relayouts, not typing-induced shifts. */
+   if(v.phase==='dock')return;layoutView(v);
+  });}
+ function makeDeck({persist=true}={}){
+  closeAnyDialog();cache.clear();course.replaceChildren();deck=createDeck(prefs.sample,prefs.length);current=0;lastEffect='';
+  showPage(0,{animate:true});if(persist)savePrefs();
+ }
+ function showPage(index,{animate=true}={}){
+  if(index<0||index>=deck.length)return;
+  const old=cache.get(current);if(old){old.scroll=course.scrollTop;old.root.hidden=true;}
+  current=index;let v=cache.get(index);const fresh=!v;
+  if(!v){v=createView(deck[index]);cache.set(index,v);}
+  v.root.hidden=false;layoutView(v);course.scrollTop=v.scroll||0;
+  $('#pageTitle').textContent=v.data.title;$('#pageCount').textContent=`${String(index+1).padStart(2,'0')} / ${String(deck.length).padStart(2,'0')}`;
+  $('#pageCount').setAttribute('aria-label',`第 ${index+1} 页，共 ${deck.length} 页`);
+  if(fresh&&v.data.kind==='teach')prepareSequence(v);
+  if(fresh&&v.data.kind==='guide')prepareGuide(v);
+  if(fresh&&v.data.id==='I05'&&!isReduced())prepareStandaloneExplanation(v);
+  if(!animate)finishView(v);
+  /* Ordinary return keeps answer, stage, chosen effect and runner time. It never re-rolls. */
+  if(!fresh&&v.answer!==null&&v.answerElapsed!==null)v.answerElapsed=null;
+  v.autoElapsed=0;trace(fresh?'page-first':'page-return',{id:v.data.id,fx:v.fx.id});announce(`第 ${index+1} 页，${v.data.kind.includes('uestion')?'题目':'讲解'}`);updateControls();
+ }
+ function updateControls(){
+  const v=cache.get(current);if(!v)return;
+  $('#prevButton').disabled=current===0;$('#pauseButton').setAttribute('aria-pressed',String(manualPaused));
+  $('#pauseButton').setAttribute('aria-label',manualPaused?'继续播放':'暂停播放');$('#pausePath').setAttribute('d',manualPaused?'M8 5l11 7-11 7Z':'M9 5v14M15 5v14');
+  let text;
+  if(v.phase==='await-image')text='上滑看图 ↑';else if(v.data.kind==='guide'&&!v.done)text='问题引入中';else if(!v.done)text='正在展示';else if(v.data.kind==='teach'&&v.frame<v.data.frames-1)text='下一状态 ↑';else if(current===deck.length-1)text='本节完成';else if(v.data.kind.includes('uestion')&&v.answer===null)text='跳过此题 ↑';else text='上滑继续 ↑';
+  if(manualPaused)text='已暂停';
+  $('#nextButton').disabled=manualPaused||(v.data.kind==='guide'&&!v.done)||(!v.done&&v.phase!=='await-image')||(v.done&&current===deck.length-1&&!(v.data.kind==='teach'&&v.frame<v.data.frames-1));
+  $('#nextButton').textContent=text;$('#nextButton').setAttribute('aria-label',text.replace(' ↑',''));
+ }
+ function forward({explicit=false}={}){
+  if(activeDialog||manualPaused||performance.now()<navGuardUntil)return;const v=cache.get(current);if(!v)return;
+  if(v.answerElapsed!==null||(v.data.kind==='guide'&&!v.done))return;
+  if(course.scrollTop+course.clientHeight<course.scrollHeight-3){course.scrollBy({top:course.clientHeight*.8});return;}
+  if(v.phase==='await-image'){v.phase='dock';v.runner=new Runner(v,v.pendingTasks);updateControls();return;}
+  if(!v.done)return;
+  navGuardUntil=performance.now()+450;
+  if(v.data.kind==='teach'&&v.frame<v.data.frames-1){selectFrame(v,v.frame+1);return;}
+  if(current<deck.length-1){if(v.data.kind.includes('uestion')&&v.answer===null)v.skipped=true;showPage(current+1);}
+ }
+ function backward(){if(activeDialog)return;const v=cache.get(current);if(v?.answerElapsed!==null)return;if(current>0)showPage(current-1);}
+ function replay(){
+  if(activeDialog)return;const v=cache.get(current);if(!v)return;
+  manualPaused=false;v.autoElapsed=0;course.scrollTop=0;v.scroll=0;
+  if(v.data.kind==='teach'){prepareSequence(v);layoutView(v);}else if(v.data.kind==='guide'){prepareGuide(v);}else if(v.data.id==='I05'){isReduced()?finishView(v):prepareStandaloneExplanation(v);}else if(v.options){v.answer=null;v.answerElapsed=null;v.skipped=false;v.note.textContent='';v.options.forEach(o=>{o.disabled=false;o.classList.remove('correct','wrong');});}
+  trace('replay',{fx:v.fx.id});updateControls();
+ }
+ function answer(v,index){
+  if(activeDialog||v!==cache.get(current)||v.answer!==null||v.answerElapsed!==null)return;
+  if(index===v.data.correct){
+   v.answer=index;v.options.forEach(o=>o.disabled=true);v.options[index].classList.add('correct');v.note.textContent='回答正确';
+   v.answerElapsed=0;updateControls();trace('answer-correct');announce('回答正确');
+  }else{
+   v.options[index].classList.add('wrong');$('#errorReason').textContent=v.data.options[index].reason;
+   openDialog(errorDialog,v.options[index]);$('#errorTitle').focus();trace('answer-wrong');
+  }
+ }
+ function closeAnyDialog(){if(activeDialog)closeDialog(activeDialog);}
+ function openDialog(dialog,trigger){
+  if(activeDialog)return;modalTrigger=trigger||document.activeElement;activeDialog=dialog;main.inert=true;
+  if(typeof dialog.showModal==='function')dialog.showModal();else{dialog.setAttribute('open','');dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');}
+  dialog.setAttribute('aria-modal','true');dialog.removeAttribute('aria-hidden');
+  trace('dialog-open',{dialog:dialog.id});
+ }
+ function closeDialog(dialog){
+  if(activeDialog!==dialog)return;
+  if(typeof dialog.close==='function')dialog.close();else dialog.removeAttribute('open');
+  activeDialog=null;main.inert=false;const trigger=modalTrigger;modalTrigger=null;
+  if(trigger?.isConnected&&!trigger.disabled)trigger.focus({preventScroll:true});else course.focus({preventScroll:true});
+  lastTick=performance.now();trace('dialog-close',{dialog:dialog.id});
+ }
+ function retry(){closeDialog(errorDialog);const v=cache.get(current);v.options?.forEach(o=>o.classList.remove('wrong'));}
+ function openSettings(){
+  $('#sampleSelect').value=prefs.sample;$('#lengthSelect').value=prefs.length;$('#modeSelect').value=prefs.mode;$('#scaleSelect').value=String(prefs.scale);$('#reducedInput').checked=prefs.reduced;
+  openDialog(settingsDialog,$('#menuButton'));$('#settingsTitle').focus();
+ }
+ function applySettings(){
+  const next={sample:$('#sampleSelect').value,length:$('#lengthSelect').value,mode:$('#modeSelect').value,scale:Number($('#scaleSelect').value),reduced:$('#reducedInput').checked};
+  const contentChange=next.sample!==prefs.sample||next.length!==prefs.length;
+  const sizeChange=next.scale!==Number(prefs.scale);
+  Object.assign(prefs,next);closeDialog(settingsDialog);document.documentElement.style.fontSize=`${16*prefs.scale}px`;savePrefs();
+  if(contentChange){manualPaused=false;makeDeck();}else{const v=cache.get(current);if(sizeChange)queueLayout();v.autoElapsed=0;updateControls();}
+ }
+ for(const dialog of [settingsDialog,errorDialog]){
+  dialog.addEventListener('cancel',e=>{e.preventDefault();dialog===errorDialog?retry():closeDialog(dialog);});
+  dialog.addEventListener('keydown',e=>{
+   if(e.key!=='Tab')return;const nodes=$$('button,select,input,[tabindex="0"]',dialog).filter(n=>!n.disabled&&!n.hidden);
+   if(!nodes.length)return;const first=nodes[0],last=nodes.at(-1),focus=document.activeElement;
+   if(e.shiftKey&&(focus===first||!nodes.includes(focus))){e.preventDefault();last.focus();}
+   else if(!e.shiftKey&&(focus===last||!dialog.contains(focus))){e.preventDefault();first.focus();}
+  });
+ }
+ $('#menuButton').addEventListener('click',openSettings);$('#closeSettingsButton').addEventListener('click',()=>closeDialog(settingsDialog));
+ $('#applyButton').addEventListener('click',applySettings);$('#settingsForm').addEventListener('submit',e=>e.preventDefault());
+ $('#retryButton').addEventListener('click',retry);$('#explainButton').addEventListener('click',()=>{closeDialog(errorDialog);forward({explicit:true});});
+ $('#prevButton').addEventListener('click',backward);$('#nextButton').addEventListener('click',()=>forward({explicit:true}));$('#replayButton').addEventListener('click',replay);
+ $('#pauseButton').addEventListener('click',()=>{manualPaused=!manualPaused;updateControls();trace('pause',{paused:manualPaused});});
+
+ /* Only a gesture that STARTS at the content boundary may change a page. The
+    gesture that merely arrives at the boundary remains an ordinary scroll. */
+ course.addEventListener('touchstart',e=>{
+  if(e.touches.length!==1||activeDialog){touch=null;return;}const t=e.touches[0];
+  touch={x:t.clientX,y:t.clientY,moved:false,top:course.scrollTop<=2,bottom:course.scrollTop+course.clientHeight>=course.scrollHeight-3,index:current,ready:cache.get(current)?.done||cache.get(current)?.phase==='await-image'};
+ },{passive:true});
+ course.addEventListener('touchmove',e=>{
+  if(!touch||e.touches.length!==1){touch=null;return;}const p=e.touches[0];if(Math.hypot(p.clientX-touch.x,p.clientY-touch.y)>12)touch.moved=true;
+ },{passive:true});
+ course.addEventListener('touchcancel',()=>{touch=null;blockClickUntil=performance.now()+500;},{passive:true});
+ course.addEventListener('touchend',e=>{
+  if(!touch)return;const start=touch;touch=null;const p=e.changedTouches[0];if(!p)return;
+  const dy=start.y-p.clientY,dx=p.clientX-start.x;if(start.moved||Math.abs(dy)>12)blockClickUntil=performance.now()+500;
+  if(activeDialog||!start.ready||start.index!==current||Math.abs(dy)<58||Math.abs(dy)<Math.abs(dx)*1.25||performance.now()<navGuardUntil)return;
+  if(dy>0&&start.bottom){forward();navGuardUntil=performance.now()+380;}else if(dy<0&&start.top){backward();navGuardUntil=performance.now()+380;}
+ },{passive:true});
+ course.addEventListener('click',e=>{if(performance.now()<blockClickUntil){e.preventDefault();e.stopImmediatePropagation();}},true);
+ let wheelLast=0,wheelSum=0,wheelUsed=false,wheelBoundary=false;
+ course.addEventListener('wheel',e=>{e.preventDefault();const now=performance.now();if(now-wheelLast>900){wheelSum=0;wheelUsed=false;wheelBoundary=course.scrollTop+course.clientHeight>=course.scrollHeight-3;}wheelLast=now;if(activeDialog)return;const delta=e.deltaY*(e.deltaMode===1?20:e.deltaMode===2?course.clientHeight:1);if(delta>0&&wheelBoundary){if(!wheelUsed){wheelSum+=delta;if(wheelSum>55){wheelUsed=true;forward();}}}else{course.scrollTop+=delta;}},{passive:false});
+ course.addEventListener('scroll',()=>{const v=cache.get(current);if(v)v.autoElapsed=0;},{passive:true});
+ window.addEventListener('keydown',e=>{
+  if(activeDialog||e.altKey||e.metaKey||e.ctrlKey||e.shiftKey)return;
+  if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(e.target.tagName))return;
+  const top=course.scrollTop<=2,bottom=course.scrollTop+course.clientHeight>=course.scrollHeight-3;
+  if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();if(bottom)forward();else course.scrollBy({top:course.clientHeight*.8});}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();if(top)backward();else course.scrollBy({top:-course.clientHeight*.8});}
+  else if(e.key==='ArrowDown'&&bottom){e.preventDefault();forward();}else if(e.key==='ArrowUp'&&top){e.preventDefault();backward();}
+ });
+ document.addEventListener('visibilitychange',()=>{docHidden=document.hidden;lastTick=performance.now();trace('visibility',{hidden:docHidden});});
+ media.addEventListener('change',()=>{trace('motion-preference',{reduced:isReduced()});});
+ window.addEventListener('resize',queueLayout);window.visualViewport?.addEventListener('resize',queueLayout);
+ new ResizeObserver(queueLayout).observe(course);
+ function loop(now){
+  const dt=Math.min(80,Math.max(0,now-lastTick));lastTick=now;
+  const v=cache.get(current);
+  if(v&&!paused()&&fontReady){
+   if(v.answerElapsed!==null){v.answerElapsed+=dt;if(v.answerElapsed>=TEMPLATE_TIMING.answerConfirm){v.answerElapsed=null;if(current<deck.length-1)showPage(current+1);else{v.note.textContent='回答正确';updateControls();}}}
+   else if(v.entrance){
+    v.entrance.elapsed=Math.min(v.entrance.duration,v.entrance.elapsed+dt);
+    const p=v.entrance.elapsed/v.entrance.duration,e=(1-Math.cos(Math.PI*p))/2;
+    v.hero.style.opacity=String(e);
+    v.hero.style.transform=`translateY(${12*(1-e)}px)`;
+    if(p>=1){v.hero.style.opacity='';v.hero.style.transform='';v.entrance=null;v.phase='await-image';updateControls();}
+   }
+   else if(v.runner&&!v.runner.done){v.runner.tick(dt);}
+   else if(false&&v.done&&prefs.mode==='auto'&&!v.data.kind.includes('uestion')&&(current<deck.length-1||(v.data.kind==='teach'&&v.frame<v.data.frames-1))){
+    const bottom=course.scrollTop+course.clientHeight>=course.scrollHeight-3;
+    if(bottom){v.autoElapsed+=dt;const len=(v.data.body||v.data.captions?.[v.frame]||'').length;
+     if(v.autoElapsed>=Math.max(TEMPLATE_TIMING.autoReadMin,len*220+1000)){if(v.data.kind==='teach'&&v.frame<v.data.frames-1)selectFrame(v,v.frame+1);else showPage(current+1);}
+    }else v.autoElapsed=0;
+   }
+  }
+  requestAnimationFrame(loop);
+ }
+ makeDeck();
+ (document.fonts?.ready||Promise.resolve()).then(()=>{fontReady=true;layoutView(cache.get(current));});requestAnimationFrame(loop);
+
+ /* Public developer hooks used by the included regression tests and by integration.
+    They are not shown as extra controls in the learner interface. */
+ window.TemplatePreview={
+  version:'4.1.3-compact-dock',timing:TEMPLATE_TIMING,get prefs(){return {...prefs};},
+  configure(next){Object.assign(prefs,next);document.documentElement.style.fontSize=`${16*prefs.scale}px`;manualPaused=false;makeDeck({persist:false});return this.state();},
+  show(i){showPage(i);},finish(){finishView(cache.get(current));},replay,pause(){manualPaused=true;updateControls();},resume(){manualPaused=false;updateControls();},
+  setFrame(n){selectFrame(cache.get(current),n);},
+  simulateVisibility(hidden){docHidden=Boolean(hidden);lastTick=performance.now();},
+  breakImage(){const v=cache.get(current);if(v?.img)v.img.src='data:image/png;base64,invalid';},
+  state(){const v=cache.get(current);return {index:current,total:deck.length,id:v?.data.id,kind:v?.data.kind,phase:v?.phase,frame:v?.frame,done:v?.done,answer:v?.answer,answerElapsed:v?.answerElapsed,
+   fx:v?.fx.id,paused:paused(),scrollTop:course.scrollTop,scrollHeight:course.scrollHeight,clientHeight:course.clientHeight,layout:v?.layout,runner:v?.runner?{index:v.runner.index,elapsed:v.runner.elapsed,done:v.runner.done}:null,reduced:isReduced()};},
+  traces(){return traces.slice();}
+ };
+})();
+</script>
+</body>
+</html>
